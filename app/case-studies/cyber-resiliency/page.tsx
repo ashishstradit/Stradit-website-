@@ -2,12 +2,10 @@ import Link from 'next/link'
 import Nav from '@/components/Nav'
 import Footer from '@/components/Footer'
 import AnimCanvas from '@/components/AnimCanvas'
+import { constructMetadata, PAGE_SEO } from '@/app/seo'
+import JsonLd, { getCaseStudySchema } from '@/components/JsonLd'
 
-export const metadata = {
-  title: 'Zero Data Loss Readiness Across 300+ Applications — StradIT Case Study',
-  description:
-    'How StradIT helped a global financial institution build bulletproof cyber resiliency across 300+ applications with zero data loss.',
-}
+export const metadata = constructMetadata(PAGE_SEO.csCyberResiliency)
 
 const steps = [
   {
@@ -53,7 +51,13 @@ const challenges = [
 export default function CyberResiliencyPage() {
   return (
     <>
+      <JsonLd schema={getCaseStudySchema({
+        title: 'Zero Data Loss Readiness Across 300+ Applications',
+        description: 'How StradIT helped a global financial institution build bulletproof cyber resiliency across 300+ applications with zero data loss.',
+        url: 'https://stradit.com/case-studies/cyber-resiliency'
+      })} />
       <Nav activePage="coe" />
+      <main id="main-content">
 
       {/* ── HERO ── */}
       <header className="hero hero--compact">
@@ -61,8 +65,7 @@ export default function CyberResiliencyPage() {
         <div className="container hero__inner">
           <div className="hero__eyebrow eyebrow">Case Study · Cyber Security</div>
           <h1 className="hero__title">
-            Zero Data Loss Readiness<br />
-            Across <em>300+ Applications</em>
+            Zero Data Loss Readiness Across <em>300+ Applications</em>
           </h1>
           <p className="hero__sub">
             When a malware attack hits, every second counts.
@@ -101,68 +104,32 @@ export default function CyberResiliencyPage() {
       <section className="section" style={{paddingTop:'100px'}}>
         <div className="container">
           <div className="section-eyebrow"><span className="idx">01</span><span>Client Overview</span></div>
-          <div className="section-intro">
-            <h2 style={{fontSize:'clamp(28px,4vw,46px)',letterSpacing:'-0.03em'}}>
-              A Global Financial Institution{' '}
-              <em style={{fontStyle:'normal',background:'linear-gradient(120deg,var(--accent),var(--accent-2))',WebkitBackgroundClip:'text',backgroundClip:'text',color:'transparent'}}>Under Pressure</em>
-            </h2>
-            <p style={{color:'var(--text-1)',fontSize:'16px',lineHeight:'1.7'}}>
-              Our client is a prominent global financial institution specialising in asset management,
-              serving clients across the world. Their technology landscape spans 300+ applications
-              powered by Oracle, SQL Server, and DB2 databases — a sprawling estate with high stakes
-              and zero tolerance for downtime.
-            </p>
-          </div>
+          {/* Client overview + Challenges toggle */}
+          <details className="cs-offerings-toggle" style={{marginBottom:'40px',textAlign:'center'}}>
+            <summary style={{display:'flex',flexDirection:'column',alignItems:'center',cursor:'pointer',listStyle:'none',paddingBottom:'20px'}}>
+              <h2 style={{fontSize:'clamp(28px,4vw,46px)',letterSpacing:'-0.03em',marginBottom:'16px',textAlign:'center'}}>A Global Financial Institution <em style={{fontStyle:'normal',background:'linear-gradient(120deg,var(--accent),var(--accent-2))',WebkitBackgroundClip:'text',backgroundClip:'text',color:'transparent'}}>Under Pressure</em></h2>
+              <p style={{color:'var(--text-1)',fontSize:'17px',lineHeight:'1.7',maxWidth:'720px',textAlign:'left',marginBottom:'20px'}}>
+                Our client is a prominent global financial institution specialising in asset management,
+                serving clients across the world. Their technology landscape spans 300+ applications
+                powered by Oracle, SQL Server, and DB2 databases — a sprawling estate with high stakes
+                and zero tolerance for downtime.
+              </p>
+              <span style={{display:'inline-flex',alignItems:'center',gap:'10px',padding:'11px 26px',borderRadius:'999px',border:'1px solid rgba(255,122,61,0.82)',background:'linear-gradient(135deg,var(--accent),var(--accent-2))',color:'#0b0f18',fontFamily:'var(--font-mono)',fontSize:'11px',fontWeight:700,letterSpacing:'0.10em',textTransform:'uppercase',boxShadow:'0 10px 24px rgba(255,122,61,0.22)'}}>
+                <span className="cs-offerings-label-more">See More</span>
+                <span className="cs-offerings-label-less" style={{display:'none'}}>See Less</span>
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" className="cs-offerings-chevron"><path d="M6 9l6 6 6-6"/></svg>
+              </span>
+            </summary>
+            <div className="cs-g2">
+              {challenges.map((c, i) => (
+                <div key={i} className="cs-bullet-item" style={{background:'var(--ink-1)'}}>
+                  <span className="cs-bullet-dot"/>
+                  <p className="cs-bullet-text">{c}</p>
+                </div>
+              ))}
+            </div>
+          </details>
 
-          {/* Challenges */}
-          <div style={{
-            display:'grid',
-            gridTemplateColumns:'1fr 1fr',
-            gap:'1px',
-            background:'var(--line)',
-            border:'1px solid var(--line)',
-            borderRadius:'var(--radius-lg)',
-            overflow:'hidden',
-            marginBottom:'40px',
-          }}>
-            {challenges.map((c, i) => (
-              <div key={i} style={{
-                background:'var(--ink-1)',
-                padding:'32px 28px',
-                display:'flex',
-                gap:'16px',
-                alignItems:'flex-start',
-              }}>
-                <span style={{
-                  fontFamily:'var(--font-mono)',
-                  fontSize:'10px',
-                  letterSpacing:'0.16em',
-                  color:'var(--accent)',
-                  flexShrink:0,
-                  marginTop:'3px',
-                }}>
-                  {String(i+1).padStart(2,'0')}
-                </span>
-                <p style={{color:'var(--text-1)',fontSize:'14px',lineHeight:'1.65'}}>{c}</p>
-              </div>
-            ))}
-          </div>
-
-          <p style={{
-            color:'var(--text-2)',
-            fontSize:'14px',
-            lineHeight:'1.7',
-            maxWidth:'760px',
-            padding:'24px',
-            borderLeft:'3px solid var(--accent)',
-            background:'var(--accent-soft)',
-            borderRadius:'0 var(--radius) var(--radius) 0',
-          }}>
-            Leadership understood the gravity of the situation: just one cyber attack could
-            lead to extended downtime, significant data loss, hefty regulatory fines, and
-            long-term damage to their reputation. They needed a reliable partner to evaluate
-            their entire application portfolio and build a solid plan for resilience.
-          </p>
         </div>
       </section>
 
@@ -172,10 +139,7 @@ export default function CyberResiliencyPage() {
           <div className="section-eyebrow"><span className="idx">02</span><span>Why StradIT</span></div>
           <div className="two-col">
             <div>
-              <h2 style={{fontSize:'clamp(28px,4vw,46px)',letterSpacing:'-0.03em',marginBottom:'20px'}}>
-                A Proven Cyber{' '}
-                <em style={{fontStyle:'normal',background:'linear-gradient(120deg,var(--accent),var(--accent-2))',WebkitBackgroundClip:'text',backgroundClip:'text',color:'transparent'}}>Resiliency Practice</em>
-              </h2>
+              <h2 style={{fontSize:'clamp(28px,4vw,46px)',letterSpacing:'-0.03em',marginBottom:'20px'}}>A Proven Cyber <em style={{fontStyle:'normal',background:'linear-gradient(120deg,var(--accent),var(--accent-2))',WebkitBackgroundClip:'text',backgroundClip:'text',color:'transparent'}}>Resiliency Practice</em></h2>
               <p style={{color:'var(--text-1)',fontSize:'16px',lineHeight:'1.7',marginBottom:'28px'}}>
                 StradIT offers a proven Cyber Resiliency practice, refined over years of
                 safeguarding critical infrastructure for clients in banking, insurance, and
@@ -214,91 +178,48 @@ export default function CyberResiliencyPage() {
       </section>
 
       {/* ── 03 HOW WE MADE IT HAPPEN ── */}
-      <section className="section">
+      <section className="section" style={{background:'var(--ink-0)',borderTop:'1px solid var(--line)'}}>
         <div className="container">
           <div className="section-eyebrow"><span className="idx">03</span><span>How We Made It Happen</span></div>
-          <div className="section-intro">
-            <h2 style={{fontSize:'clamp(28px,4vw,46px)',letterSpacing:'-0.03em'}}>
-              Proactive. Precise.{' '}
-              <em style={{fontStyle:'normal',background:'linear-gradient(120deg,var(--accent),var(--accent-2))',WebkitBackgroundClip:'text',backgroundClip:'text',color:'transparent'}}>Battle-Tested.</em>
-            </h2>
-            <p style={{color:'var(--text-1)',fontSize:'16px',lineHeight:'1.7'}}>
-              Cybersecurity at StradIT is never reactive. We took a structured, multi-step approach
-              to help this client overcome their cybersecurity challenges from the ground up.
-            </p>
-          </div>
-
           {/* Steps */}
-          <div style={{display:'flex',flexDirection:'column',gap:'1px',background:'var(--line)',border:'1px solid var(--line)',borderRadius:'var(--radius-lg)',overflow:'hidden',marginBottom:'40px'}}>
-            {steps.map((step) => (
-              <div key={step.num} style={{
-                background:'var(--ink-1)',
-                padding:'36px 40px',
-                display:'grid',
-                gridTemplateColumns:'80px 1fr',
-                gap:'32px',
-                alignItems:'start',
-              }}>
-                <div>
-                  <div style={{
-                    fontFamily:'var(--font-mono)',
-                    fontSize:'10px',
-                    letterSpacing:'0.16em',
-                    color:'var(--text-3)',
-                    marginBottom:'4px',
-                    textTransform:'uppercase',
-                  }}>Step</div>
-                  <div style={{
-                    fontFamily:'var(--font-display)',
-                    fontSize:'42px',
-                    fontWeight:600,
-                    letterSpacing:'-0.04em',
-                    lineHeight:1,
-                    background:'linear-gradient(135deg,var(--accent),var(--accent-2))',
-                    WebkitBackgroundClip:'text',
-                    backgroundClip:'text',
-                    color:'transparent',
-                  }}>{step.num}</div>
-                </div>
-                <div>
-                  <div style={{
-                    fontFamily:'var(--font-display)',
-                    fontSize:'19px',
-                    fontWeight:500,
-                    letterSpacing:'-0.02em',
-                    marginBottom:'10px',
-                    color:'var(--text-0)',
-                  }}>{step.title}</div>
-                  <p style={{color:'var(--text-2)',fontSize:'14px',lineHeight:'1.7'}}>{step.body}</p>
-                </div>
+          <details className="cs-offerings-toggle" style={{marginBottom:'40px',textAlign:'center'}}>
+            <summary style={{display:'flex',flexDirection:'column',alignItems:'center',cursor:'pointer',listStyle:'none',paddingBottom:'20px'}}>
+              <h2 style={{fontSize:'clamp(28px,4vw,46px)',letterSpacing:'-0.03em',marginBottom:'16px',textAlign:'center'}}>Proactive. Precise. <em style={{fontStyle:'normal',background:'linear-gradient(120deg,var(--accent),var(--accent-2))',WebkitBackgroundClip:'text',backgroundClip:'text',color:'transparent'}}>Battle-Tested.</em></h2>
+              <p style={{color:'var(--text-1)',fontSize:'17px',lineHeight:'1.7',maxWidth:'720px',textAlign:'left',marginBottom:'20px'}}>
+                Cybersecurity at StradIT is never reactive. We took a structured, multi-step approach
+                to help this client overcome their cybersecurity challenges from the ground up.
+              </p>
+              <div style={{display:'flex',alignItems:'center',gap:'16px',justifyContent:'center',flexWrap:'wrap'}}>
+                <span style={{display:'inline-flex',alignItems:'center',gap:'10px',padding:'11px 26px',borderRadius:'999px',border:'1px solid rgba(255,122,61,0.82)',background:'linear-gradient(135deg,var(--accent),var(--accent-2))',color:'#0b0f18',fontFamily:'var(--font-mono)',fontSize:'11px',fontWeight:700,letterSpacing:'0.10em',textTransform:'uppercase',boxShadow:'0 10px 24px rgba(255,122,61,0.22)'}}>
+                  <span className="cs-offerings-label-more">See More</span>
+                  <span className="cs-offerings-label-less" style={{display:'none'}}>See Less</span>
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" className="cs-offerings-chevron"><path d="M6 9l6 6 6-6"/></svg>
+                </span>
+                <a href="/coe/cyber" style={{display:'inline-flex',alignItems:'center',gap:'8px',padding:'11px 26px',borderRadius:'999px',border:'1px solid rgba(255,122,61,0.82)',background:'linear-gradient(135deg,var(--accent),var(--accent-2))',color:'#0b0f18',fontFamily:'var(--font-mono)',fontSize:'11px',fontWeight:700,letterSpacing:'0.10em',textTransform:'uppercase',textDecoration:'none',boxShadow:'0 10px 24px rgba(255,122,61,0.22)'}}>
+                  EXPLORE OUR CYBER COE
+                  <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+                </a>
               </div>
-            ))}
-          </div>
+            </summary>
+            <div className="cs-step-list">
+              {steps.map((step) => (
+                <div key={step.num} className="cs-step-row" style={{background:'var(--ink-1)'}}>
+                  <span className="cs-step-dot"/>
+                  <div>
+                    <div className="cs-step-title">{step.title}</div>
+                    <p className="cs-step-body">{step.body}</p>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </details>
 
-          <Link href="/contact" className="btn btn--ghost">
-            Explore our Cyber CoE
-            <svg className="arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
-          </Link>
         </div>
       </section>
 
-      {/* ── 04 OUTCOMES ── */}
-      <section className="section" style={{background:'var(--ink-1)',borderTop:'1px solid var(--line)'}}>
-        <div className="container">
-          <div className="section-eyebrow"><span className="idx">04</span><span>What the Client Walked Away With</span></div>
-          <h2 style={{fontSize:'clamp(28px,4vw,46px)',letterSpacing:'-0.03em',marginBottom:'16px'}}>
-            A Transformed{' '}
-            <em style={{fontStyle:'normal',background:'linear-gradient(120deg,var(--accent),var(--accent-2))',WebkitBackgroundClip:'text',backgroundClip:'text',color:'transparent'}}>Cyber Resiliency Posture</em>
-          </h2>
-          <p style={{color:'var(--text-1)',fontSize:'16px',lineHeight:'1.7',maxWidth:'680px',marginBottom:'48px'}}>
-            Two years into our partnership, this institution still chooses StradIT. The reason is
-            simple: a tailored cybersecurity strategy that makes threats a thing of the past.
-          </p>
-        </div>
-      </section>
 
       {/* ── CTA ── */}
-      <section className="section" style={{borderTop:'1px solid var(--line)'}}>
+      <section className="section" style={{background:'var(--ink-1)',borderTop:'1px solid var(--line)'}}>
         <div className="container" style={{textAlign:'center',maxWidth:'680px',margin:'0 auto'}}>
           <div style={{
             fontFamily:'var(--font-mono)',
@@ -308,17 +229,7 @@ export default function CyberResiliencyPage() {
             color:'var(--accent)',
             marginBottom:'20px',
           }}>Unsure How Your Organisation Would Survive a Cyber Incident?</div>
-          <h2 style={{
-            fontSize:'clamp(28px,4vw,46px)',
-            letterSpacing:'-0.03em',
-            marginBottom:'20px',
-            lineHeight:1.1,
-          }}>
-            StradIT Can Help You{' '}
-            <em style={{fontStyle:'normal',background:'linear-gradient(120deg,var(--accent),var(--accent-2))',WebkitBackgroundClip:'text',backgroundClip:'text',color:'transparent'}}>
-              Close the Gaps
-            </em>
-          </h2>
+          <h2 style={{fontSize:'clamp(28px,4vw,46px)',letterSpacing:'-0.03em',marginBottom:'20px',lineHeight:1.1}}>StradIT Can Help You <em style={{fontStyle:'normal',background:'linear-gradient(120deg,var(--accent),var(--accent-2))',WebkitBackgroundClip:'text',backgroundClip:'text',color:'transparent'}}>Close the Gaps</em></h2>
           <p style={{color:'var(--text-1)',fontSize:'16px',lineHeight:'1.7',marginBottom:'36px'}}>
             We uncover vulnerabilities and fix them before attackers find them first.
           </p>
@@ -334,6 +245,7 @@ export default function CyberResiliencyPage() {
         </div>
       </section>
 
+      </main>
       <Footer />
     </>
   )

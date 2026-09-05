@@ -1,0 +1,17 @@
+<IfModule mod_expires.c>
+  ExpiresActive On
+
+  # Default expires
+  ExpiresDefault "access plus 1 day"
+
+  # Static assets Cache rules
+  <FilesMatch "\.(css|js|woff|woff2|eot|ttf|otf|gif|jpe?g|png|svg|webp|ico|avif)$">
+    # If the URL is a Next.js hashed file, cache it forever (1 year)
+    <If "%{REQUEST_URI} =~ m#/_next/static/#">
+      Header set Cache-Control "public, max-age=31536000, immutable"
+    </If>
+    <Else>
+      Header set Cache-Control "public, max-age=604800, must-revalidate"
+    </Else>
+  </FilesMatch>
+</IfModule>

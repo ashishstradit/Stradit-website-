@@ -2,8 +2,10 @@ import Link from 'next/link'
 import Nav from '@/components/Nav'
 import Footer from '@/components/Footer'
 import AnimCanvas from '@/components/AnimCanvas'
+import { constructMetadata, PAGE_SEO } from '@/app/seo'
+import JsonLd, { getServiceSchema } from '@/components/JsonLd'
 
-export const metadata = { title: 'Digital Assets & Blockchain — StradIT' }
+export const metadata = constructMetadata(PAGE_SEO.coeDigitalAssets)
 
 const gradTeal = { fontStyle:'normal' as const, background:'linear-gradient(120deg,#4fd1c5,#4cc8ff)', WebkitBackgroundClip:'text' as const, backgroundClip:'text' as const, color:'transparent' as const }
 const gradGold = { fontStyle:'normal' as const, background:'linear-gradient(120deg,#f5b76b,#ffa066)', WebkitBackgroundClip:'text' as const, backgroundClip:'text' as const, color:'transparent' as const }
@@ -35,7 +37,13 @@ const pillars = [
 export default function CoeDigitalAssetsPage() {
   return (
     <>
+      <JsonLd schema={getServiceSchema({
+        name: 'Digital Assets & Blockchain Center of Excellence',
+        description: 'Secure, scale, and regulate distributed ledger architectures. StradIT designs on-chain tokenization, smart contracts, and compliance pipelines.',
+        url: 'https://stradit.com/coe/digital-assets'
+      })} />
       <Nav activePage="coe" />
+      <main id="main-content">
 
       {/* HERO */}
       <header className="hero hero--compact">
@@ -106,21 +114,22 @@ export default function CoeDigitalAssetsPage() {
         <div className="container">
           <div className="section-eyebrow"><span className="idx">01</span><span>Core Offerings</span></div>
           <h2 className="reveal" style={{fontSize:'clamp(28px,3.5vw,48px)',letterSpacing:'-0.03em',maxWidth:'720px',lineHeight:'1.05',marginBottom:'48px'}}>
-            Three practices. One integrated digital asset program.
+            Three practices. One integrated <em style={{fontStyle:'normal',background:'linear-gradient(120deg,var(--accent),var(--accent-2))',WebkitBackgroundClip:'text',backgroundClip:'text',color:'transparent'}}>digital asset program.</em>
           </h2>
           <div style={{display:'grid',gridTemplateColumns:'repeat(3,1fr)',gap:'20px'}} className="da-pillar-grid">
             {pillars.map((p, i) => (
-              <div key={p.title} className={`reveal reveal-delay-${i+1}`} style={{background:'var(--ink-1)',border:'1px solid var(--line)',borderRadius:'18px',padding:'36px 32px',position:'relative',overflow:'hidden'}}>
+              <details key={p.title} className={`text-expand-card reveal reveal-delay-${i+1}`} style={{position:'relative'}}>
                 <div style={{position:'absolute',top:0,left:0,right:0,height:'2px',background:`linear-gradient(90deg,${p.color},transparent)`}} />
-                <div style={{fontFamily:'var(--font-mono)',fontSize:'10px',letterSpacing:'0.18em',textTransform:'uppercase',color:p.color,marginBottom:'16px'}}>{p.num}</div>
-                <div style={{fontFamily:'var(--font-display)',fontSize:'22px',letterSpacing:'-0.025em',marginBottom:'12px'}}>{p.title}</div>
-                <p style={{fontSize:'14px',color:'var(--text-2)',lineHeight:'1.65',marginBottom:'24px'}}>{p.desc}</p>
-                <div style={{display:'flex',flexWrap:'wrap',gap:'6px'}}>
+                <summary>
+                  <span className="text-expand-card__title">{p.title}</span>
+                </summary>
+                <p className="text-expand-card__body">{p.desc}</p>
+                <div style={{display:'flex',flexWrap:'wrap',gap:'6px',margin:'-6px 24px 22px calc(24px + 42px)'}}>
                   {p.tags.map(tag => (
                     <span key={tag} style={{fontFamily:'var(--font-mono)',fontSize:'9px',letterSpacing:'0.12em',textTransform:'uppercase',padding:'5px 10px',borderRadius:'999px',border:'1px solid var(--line-strong)',color:'var(--text-2)'}}>{tag}</span>
                   ))}
                 </div>
-              </div>
+              </details>
             ))}
           </div>
         </div>
@@ -148,12 +157,15 @@ export default function CoeDigitalAssetsPage() {
               const bgs = ['rgba(79,209,197,0.12)','rgba(76,200,255,0.12)','rgba(245,183,107,0.12)']
               const borders = ['rgba(79,209,197,0.35)','rgba(76,200,255,0.35)','rgba(245,183,107,0.35)']
               return (
-                <div key={step.num} className={`reveal reveal-delay-${i+1}`} style={{paddingRight:'24px'}}>
-                  <div style={{width:'56px',height:'56px',borderRadius:'50%',display:'flex',alignItems:'center',justifyContent:'center',fontFamily:'var(--font-display)',fontSize:'20px',fontWeight:500,letterSpacing:'-0.02em',marginBottom:'20px',background:bgs[i],border:`1px solid ${borders[i]}`,color:colors[i]}}>{step.num}</div>
-                  <div style={{fontFamily:'var(--font-mono)',fontSize:'10px',letterSpacing:'0.14em',textTransform:'uppercase',color:'var(--text-3)',marginBottom:'8px'}}>{step.dur}</div>
-                  <div style={{fontFamily:'var(--font-display)',fontSize:'18px',fontWeight:500,letterSpacing:'-0.02em',marginBottom:'10px'}}>{step.title}</div>
-                  <p style={{fontSize:'14px',color:'var(--text-2)',lineHeight:'1.6'}}>{step.desc}</p>
-                </div>
+                <details key={step.num} className={`text-expand-card reveal reveal-delay-${i+1}`}>
+                  <summary>
+                    <span className="text-expand-card__title">
+                      {step.title}
+                      <span className="text-expand-card__meta">{step.dur}</span>
+                    </span>
+                  </summary>
+                  <p className="text-expand-card__body">{step.desc}</p>
+                </details>
               )
             })}
           </div>
@@ -183,6 +195,7 @@ export default function CoeDigitalAssetsPage() {
         </div>
       </section>
 
+      </main>
       <Footer />
     </>
   )

@@ -2,12 +2,10 @@ import Link from 'next/link'
 import Nav from '@/components/Nav'
 import Footer from '@/components/Footer'
 import AnimCanvas from '@/components/AnimCanvas'
+import { constructMetadata, PAGE_SEO } from '@/app/seo'
+import JsonLd, { getCaseStudySchema } from '@/components/JsonLd'
 
-export const metadata = {
-  title: 'Reduction in Manual Reporting & Scalability Delivered — StradIT Case Study',
-  description:
-    'How StradIT modernised a global investment bank\'s data infrastructure 360°, cutting manual reporting by 80% and delivering intraday risk visibility.',
-}
+export const metadata = constructMetadata(PAGE_SEO.csDataAnalytics)
 
 const challenges = [
   'Data lived in silos across disconnected systems',
@@ -74,7 +72,13 @@ const steps = [
 export default function DataAnalyticsCaseStudyPage() {
   return (
     <>
+      <JsonLd schema={getCaseStudySchema({
+        title: '80% Reduction in Manual Reporting & Scalability Delivered',
+        description: 'How StradIT modernised a global investment bank\'s data infrastructure 360°, cutting manual reporting by 80% and delivering intraday risk visibility.',
+        url: 'https://stradit.com/case-studies/data-analytics'
+      })} />
       <Nav activePage="coe" />
+      <main id="main-content">
 
       {/* ── HERO ── */}
       <header className="hero hero--compact">
@@ -82,8 +86,7 @@ export default function DataAnalyticsCaseStudyPage() {
         <div className="container hero__inner">
           <div className="hero__eyebrow eyebrow">Case Study · Data Analytics</div>
           <h1 className="hero__title">
-            80% Reduction in Manual Reporting<br />
-            &amp; <em>Scalability Delivered</em>
+            80% Reduction in Manual Reporting &amp; <em>Scalability Delivered</em>
           </h1>
           <p className="hero__sub">
             From hours to minutes — a 360° data infrastructure transformation.
@@ -122,66 +125,32 @@ export default function DataAnalyticsCaseStudyPage() {
       <section className="section" style={{paddingTop:'100px'}}>
         <div className="container">
           <div className="section-eyebrow"><span className="idx">01</span><span>Client Overview</span></div>
-          <div className="section-intro">
-            <h2 style={{fontSize:'clamp(28px,4vw,46px)',letterSpacing:'-0.03em'}}>
-              A Global Investment Bank{' '}
-              <em style={{fontStyle:'normal',background:'linear-gradient(120deg,var(--accent),var(--accent-2))',WebkitBackgroundClip:'text',backgroundClip:'text',color:'transparent'}}>Drowning in Data</em>
-            </h2>
-            <p style={{color:'var(--text-1)',fontSize:'16px',lineHeight:'1.7'}}>
-              A global investment bank running multi-asset trading operations spanning equities,
-              fixed income, foreign exchange, and derivatives. Despite the scale of their operations,
-              their data infrastructure had not kept pace — patching the old system was not the answer.
-              They needed a complete transformation, and StradIT was their best bet.
-            </p>
-          </div>
+          {/* Client overview + Challenges toggle */}
+          <details className="cs-offerings-toggle" style={{marginBottom:'40px',textAlign:'center'}}>
+            <summary style={{display:'flex',flexDirection:'column',alignItems:'center',cursor:'pointer',listStyle:'none',paddingBottom:'20px'}}>
+              <h2 style={{fontSize:'clamp(28px,4vw,46px)',letterSpacing:'-0.03em',marginBottom:'16px',textAlign:'center'}}>A Global Investment Bank <em style={{fontStyle:'normal',background:'linear-gradient(120deg,var(--accent),var(--accent-2))',WebkitBackgroundClip:'text',backgroundClip:'text',color:'transparent'}}>Drowning in Data</em></h2>
+              <p style={{color:'var(--text-1)',fontSize:'17px',lineHeight:'1.7',maxWidth:'720px',textAlign:'left',marginBottom:'20px'}}>
+                A global investment bank running multi-asset trading operations spanning equities,
+                fixed income, foreign exchange, and derivatives. Despite the scale of their operations,
+                their data infrastructure had not kept pace — patching the old system was not the answer.
+                They needed a complete transformation, and StradIT was their best bet.
+              </p>
+              <span style={{display:'inline-flex',alignItems:'center',gap:'10px',padding:'11px 26px',borderRadius:'999px',border:'1px solid rgba(255,122,61,0.82)',background:'linear-gradient(135deg,var(--accent),var(--accent-2))',color:'#0b0f18',fontFamily:'var(--font-mono)',fontSize:'11px',fontWeight:700,letterSpacing:'0.10em',textTransform:'uppercase',boxShadow:'0 10px 24px rgba(255,122,61,0.22)'}}>
+                <span className="cs-offerings-label-more">See More</span>
+                <span className="cs-offerings-label-less" style={{display:'none'}}>See Less</span>
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" className="cs-offerings-chevron"><path d="M6 9l6 6 6-6"/></svg>
+              </span>
+            </summary>
+            <div className="cs-g2">
+              {challenges.map((c, i) => (
+                <div key={i} className="cs-bullet-item" style={{background:'var(--ink-1)'}}>
+                  <span className="cs-bullet-dot"/>
+                  <p className="cs-bullet-text">{c}</p>
+                </div>
+              ))}
+            </div>
+          </details>
 
-          {/* Challenges */}
-          <div style={{
-            display:'grid',
-            gridTemplateColumns:'1fr 1fr',
-            gap:'1px',
-            background:'var(--line)',
-            border:'1px solid var(--line)',
-            borderRadius:'var(--radius-lg)',
-            overflow:'hidden',
-            marginBottom:'40px',
-          }}>
-            {challenges.map((c, i) => (
-              <div key={i} style={{
-                background:'var(--ink-1)',
-                padding:'32px 28px',
-                display:'flex',
-                gap:'16px',
-                alignItems:'flex-start',
-              }}>
-                <span style={{
-                  fontFamily:'var(--font-mono)',
-                  fontSize:'10px',
-                  letterSpacing:'0.16em',
-                  color:'var(--accent)',
-                  flexShrink:0,
-                  marginTop:'3px',
-                }}>
-                  {String(i+1).padStart(2,'0')}
-                </span>
-                <p style={{color:'var(--text-1)',fontSize:'14px',lineHeight:'1.65'}}>{c}</p>
-              </div>
-            ))}
-          </div>
-
-          <p style={{
-            color:'var(--text-2)',
-            fontSize:'14px',
-            lineHeight:'1.7',
-            maxWidth:'760px',
-            padding:'24px',
-            borderLeft:'3px solid var(--accent)',
-            background:'var(--accent-soft)',
-            borderRadius:'0 var(--radius) var(--radius) 0',
-          }}>
-            For them, patching the old system was not the answer. They required a complete
-            data and analytics transformation — and StradIT was their best bet.
-          </p>
         </div>
       </section>
 
@@ -191,10 +160,7 @@ export default function DataAnalyticsCaseStudyPage() {
           <div className="section-eyebrow"><span className="idx">02</span><span>Why StradIT</span></div>
           <div className="two-col">
             <div>
-              <h2 style={{fontSize:'clamp(28px,4vw,46px)',letterSpacing:'-0.03em',marginBottom:'20px'}}>
-                The Leader in{' '}
-                <em style={{fontStyle:'normal',background:'linear-gradient(120deg,var(--accent),var(--accent-2))',WebkitBackgroundClip:'text',backgroundClip:'text',color:'transparent'}}>Data &amp; Analytics Modernisation</em>
-              </h2>
+              <h2 style={{fontSize:'clamp(28px,4vw,46px)',letterSpacing:'-0.03em',marginBottom:'20px'}}>The Leader in <em style={{fontStyle:'normal',background:'linear-gradient(120deg,var(--accent),var(--accent-2))',WebkitBackgroundClip:'text',backgroundClip:'text',color:'transparent'}}>Data &amp; Analytics Modernisation</em></h2>
               <p style={{color:'var(--text-1)',fontSize:'16px',lineHeight:'1.7',marginBottom:'16px'}}>
                 StradIT's Data Analytics CoE combines deep technical expertise with a practical
                 understanding of how trading floors, risk functions, and compliance teams actually work.
@@ -237,44 +203,32 @@ export default function DataAnalyticsCaseStudyPage() {
       </section>
 
       {/* ── 03 WHAT WE OFFERED ── */}
-      <section className="section">
+      <section className="section" style={{background:'var(--ink-0)',borderTop:'1px solid var(--line)'}}>
         <div className="container">
           <div className="section-eyebrow"><span className="idx">03</span><span>What We Offered</span></div>
-          <div className="section-intro">
-            <h2 style={{fontSize:'clamp(28px,4vw,46px)',letterSpacing:'-0.03em'}}>
-              More Than a{' '}
-              <em style={{fontStyle:'normal',background:'linear-gradient(120deg,var(--accent),var(--accent-2))',WebkitBackgroundClip:'text',backgroundClip:'text',color:'transparent'}}>Technology Upgrade</em>
-            </h2>
-            <p style={{color:'var(--text-1)',fontSize:'16px',lineHeight:'1.7'}}>
-              The bank needed a platform that could unify scattered data sources, deliver real-time
-              insights, and scale gracefully as trading volumes grow. We planned and delivered
-              100% customised solutions across every layer of their data estate.
-            </p>
-          </div>
-
-          <div style={{
-            display:'grid',
-            gridTemplateColumns:'repeat(3,1fr)',
-            gap:'1px',
-            background:'var(--line)',
-            border:'1px solid var(--line)',
-            borderRadius:'var(--radius-lg)',
-            overflow:'hidden',
-            marginBottom:'40px',
-          }}>
-            {offerings.map((o, i) => (
-              <div key={i} style={{
-                background:'var(--ink-1)',
-                padding:'28px 24px',
-                display:'flex',
-                gap:'14px',
-                alignItems:'flex-start',
-              }}>
-                <span style={{color:'var(--accent)',flexShrink:0,marginTop:'2px'}}>→</span>
-                <span style={{color:'var(--text-1)',fontSize:'14px',lineHeight:'1.6'}}>{o}</span>
-              </div>
-            ))}
-          </div>
+          <details className="cs-offerings-toggle" style={{marginBottom:'40px',textAlign:'center'}}>
+            <summary style={{display:'flex',flexDirection:'column',alignItems:'center',cursor:'pointer',listStyle:'none',paddingBottom:'20px'}}>
+              <h2 style={{fontSize:'clamp(28px,4vw,46px)',letterSpacing:'-0.03em',marginBottom:'16px',textAlign:'center'}}>More Than a <em style={{fontStyle:'normal',background:'linear-gradient(120deg,var(--accent),var(--accent-2))',WebkitBackgroundClip:'text',backgroundClip:'text',color:'transparent'}}>Technology Upgrade</em></h2>
+              <p style={{color:'var(--text-1)',fontSize:'17px',lineHeight:'1.7',maxWidth:'720px',textAlign:'left',marginBottom:'20px'}}>
+                The bank needed a platform that could unify scattered data sources, deliver real-time
+                insights, and scale gracefully as trading volumes grow. We planned and delivered
+                100% customised solutions across every layer of their data estate.
+              </p>
+              <span style={{display:'inline-flex',alignItems:'center',gap:'10px',padding:'11px 26px',borderRadius:'999px',border:'1px solid rgba(255,122,61,0.82)',background:'linear-gradient(135deg,var(--accent),var(--accent-2))',color:'#0b0f18',fontFamily:'var(--font-mono)',fontSize:'11px',fontWeight:700,letterSpacing:'0.10em',textTransform:'uppercase',boxShadow:'0 10px 24px rgba(255,122,61,0.22)'}}>
+                <span className="cs-offerings-label-more">See More</span>
+                <span className="cs-offerings-label-less" style={{display:'none'}}>See Less</span>
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" className="cs-offerings-chevron"><path d="M6 9l6 6 6-6"/></svg>
+              </span>
+            </summary>
+            <div className="cs-g2">
+              {offerings.map((o, i) => (
+                <div key={i} className="cs-bullet-item" style={{background:'var(--ink-1)'}}>
+                  <span className="cs-bullet-dot"/>
+                  <p className="cs-bullet-text">{o}</p>
+                </div>
+              ))}
+            </div>
+          </details>
         </div>
       </section>
 
@@ -282,90 +236,38 @@ export default function DataAnalyticsCaseStudyPage() {
       <section className="section" style={{background:'var(--ink-1)',borderTop:'1px solid var(--line)'}}>
         <div className="container">
           <div className="section-eyebrow"><span className="idx">04</span><span>How We Delivered It</span></div>
-          <div className="section-intro">
-            <h2 style={{fontSize:'clamp(28px,4vw,46px)',letterSpacing:'-0.03em'}}>
-              Clarity to Chaos.{' '}
-              <em style={{fontStyle:'normal',background:'linear-gradient(120deg,var(--accent),var(--accent-2))',WebkitBackgroundClip:'text',backgroundClip:'text',color:'transparent'}}>Confidence to the Client.</em>
-            </h2>
-            <p style={{color:'var(--text-1)',fontSize:'16px',lineHeight:'1.7'}}>
+          <div style={{marginBottom:'40px',textAlign:'center'}}>
+            <h2 style={{fontSize:'clamp(28px,4vw,46px)',letterSpacing:'-0.03em',marginBottom:'20px'}}>Clarity to Chaos. <em style={{fontStyle:'normal',background:'linear-gradient(120deg,var(--accent),var(--accent-2))',WebkitBackgroundClip:'text',backgroundClip:'text',color:'transparent'}}>Confidence to the Client.</em></h2>
+            <p style={{color:'var(--text-1)',fontSize:'17px',lineHeight:'1.7',maxWidth:'720px',margin:'0 auto 20px',textAlign:'left'}}>
               StradIT assembled a data squad featuring the best minds in analytics and AI — working
               through a structured six-step approach to bring order to complexity.
             </p>
           </div>
 
-          <div style={{display:'flex',flexDirection:'column',gap:'1px',background:'var(--line)',border:'1px solid var(--line)',borderRadius:'var(--radius-lg)',overflow:'hidden',marginBottom:'40px'}}>
-            {steps.map((step) => (
-              <div key={step.num} style={{
-                background:'var(--ink-2)',
-                padding:'36px 40px',
-                display:'grid',
-                gridTemplateColumns:'80px 1fr',
-                gap:'32px',
-                alignItems:'start',
-              }}>
-                <div>
-                  <div style={{
-                    fontFamily:'var(--font-mono)',
-                    fontSize:'10px',
-                    letterSpacing:'0.16em',
-                    color:'var(--text-3)',
-                    marginBottom:'4px',
-                    textTransform:'uppercase',
-                  }}>Step</div>
-                  <div style={{
-                    fontFamily:'var(--font-display)',
-                    fontSize:'42px',
-                    fontWeight:600,
-                    letterSpacing:'-0.04em',
-                    lineHeight:1,
-                    background:'linear-gradient(135deg,var(--accent),var(--accent-2))',
-                    WebkitBackgroundClip:'text',
-                    backgroundClip:'text',
-                    color:'transparent',
-                  }}>{step.num}</div>
+          <details className="cs-offerings-toggle" style={{marginBottom:'40px',textAlign:'center'}}>
+            <summary style={{display:'inline-flex',alignItems:'center',gap:'10px',padding:'11px 26px',borderRadius:'999px',border:'1px solid rgba(255,122,61,0.82)',background:'linear-gradient(135deg,var(--accent),var(--accent-2))',color:'#0b0f18',fontFamily:'var(--font-mono)',fontSize:'11px',fontWeight:700,letterSpacing:'0.10em',textTransform:'uppercase',cursor:'pointer',listStyle:'none',boxShadow:'0 10px 24px rgba(255,122,61,0.22)'}}>
+              <span className="cs-offerings-label-more">See More</span>
+              <span className="cs-offerings-label-less" style={{display:'none'}}>See Less</span>
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" className="cs-offerings-chevron"><path d="M6 9l6 6 6-6"/></svg>
+            </summary>
+            <div className="cs-step-list">
+              {steps.map((step) => (
+                <div key={step.num} className="cs-step-row" style={{background:'var(--ink-2)'}}>
+                  <span className="cs-step-dot"/>
+                  <div>
+                    <div className="cs-step-title">{step.title}</div>
+                    <div className="cs-step-tag">{step.tech}</div>
+                    <p className="cs-step-body">{step.body}</p>
+                  </div>
                 </div>
-                <div>
-                  <div style={{
-                    fontFamily:'var(--font-display)',
-                    fontSize:'19px',
-                    fontWeight:500,
-                    letterSpacing:'-0.02em',
-                    marginBottom:'6px',
-                    color:'var(--text-0)',
-                  }}>{step.title}</div>
-                  <div style={{
-                    fontFamily:'var(--font-mono)',
-                    fontSize:'10px',
-                    letterSpacing:'0.12em',
-                    textTransform:'uppercase',
-                    color:'var(--cyan)',
-                    marginBottom:'10px',
-                  }}>{step.tech}</div>
-                  <p style={{color:'var(--text-2)',fontSize:'14px',lineHeight:'1.7'}}>{step.body}</p>
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* ── 05 OUTCOMES ── */}
-      <section className="section">
-        <div className="container">
-          <div className="section-eyebrow"><span className="idx">05</span><span>What the Client Achieved</span></div>
-          <h2 style={{fontSize:'clamp(28px,4vw,46px)',letterSpacing:'-0.03em',marginBottom:'16px'}}>
-            The Results{' '}
-            <em style={{fontStyle:'normal',background:'linear-gradient(120deg,var(--accent),var(--accent-2))',WebkitBackgroundClip:'text',backgroundClip:'text',color:'transparent'}}>Spoke for Themselves</em>
-          </h2>
-          <p style={{color:'var(--text-1)',fontSize:'16px',lineHeight:'1.7',maxWidth:'680px',marginBottom:'48px'}}>
-            The bank moved from firefighting data issues to confidently leveraging AI-powered
-            analytics as a competitive advantage.
-          </p>
+              ))}
+            </div>
+          </details>
         </div>
       </section>
 
       {/* ── CTA ── */}
-      <section className="section" style={{background:'var(--ink-1)',borderTop:'1px solid var(--line)'}}>
+      <section className="section" style={{background:'var(--ink-0)',borderTop:'1px solid var(--line)'}}>
         <div className="container" style={{textAlign:'center',maxWidth:'680px',margin:'0 auto'}}>
           <div style={{
             fontFamily:'var(--font-mono)',
@@ -375,17 +277,7 @@ export default function DataAnalyticsCaseStudyPage() {
             color:'var(--accent)',
             marginBottom:'20px',
           }}>Drowning in Data Complexity?</div>
-          <h2 style={{
-            fontSize:'clamp(28px,4vw,46px)',
-            letterSpacing:'-0.03em',
-            marginBottom:'20px',
-            lineHeight:1.1,
-          }}>
-            StradIT Can Build the Foundation{' '}
-            <em style={{fontStyle:'normal',background:'linear-gradient(120deg,var(--accent),var(--accent-2))',WebkitBackgroundClip:'text',backgroundClip:'text',color:'transparent'}}>
-              That Scales
-            </em>
-          </h2>
+          <h2 style={{fontSize:'clamp(28px,4vw,46px)',letterSpacing:'-0.03em',marginBottom:'20px',lineHeight:1.1}}>StradIT Can Build the Foundation <em style={{fontStyle:'normal',background:'linear-gradient(120deg,var(--accent),var(--accent-2))',WebkitBackgroundClip:'text',backgroundClip:'text',color:'transparent'}}>That Scales</em></h2>
           <p style={{color:'var(--text-1)',fontSize:'16px',lineHeight:'1.7',marginBottom:'36px'}}>
             We help you build a modern analytics foundation that grows with your ambitions —
             from data lake to real-time insights, governed and production-ready.
@@ -402,6 +294,7 @@ export default function DataAnalyticsCaseStudyPage() {
         </div>
       </section>
 
+      </main>
       <Footer />
     </>
   )

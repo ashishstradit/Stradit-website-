@@ -3,8 +3,10 @@ import Nav from '@/components/Nav'
 import Footer from '@/components/Footer'
 import AnimCanvas from '@/components/AnimCanvas'
 import CaseStudySection from '@/components/CaseStudySection'
+import { constructMetadata, PAGE_SEO } from '@/app/seo'
+import JsonLd, { getServiceSchema } from '@/components/JsonLd'
 
-export const metadata = { title: 'Cyber Security — Applied AI — StradIT' }
+export const metadata = constructMetadata(PAGE_SEO.coeCyber)
 
 const cards = [
   { title:'Cybersecurity Advisory', desc:'Risk strategy, compliance readiness, and security roadmaps built around your highest-value assets.' },
@@ -17,7 +19,13 @@ const gradText = { fontStyle:'normal' as const, background:'linear-gradient(120d
 export default function CoeCyberPage() {
   return (
     <>
+      <JsonLd schema={getServiceSchema({
+        name: 'Cyber Security Center of Excellence',
+        description: 'Protect your digital assets. Our security practice designs resilient architectures, implements automated threat detection, and ensures audit readiness.',
+        url: 'https://stradit.com/coe/cyber'
+      })} />
       <Nav activePage="coe" />
+      <main id="main-content">
 
       {/* HERO */}
       <header className="hero hero--compact">
@@ -55,24 +63,20 @@ export default function CoeCyberPage() {
       <section className="section">
         <div className="container">
           <div className="section-eyebrow"><span className="idx">01</span><span>Our Approach</span></div>
-          <div className="section-intro">
-            <h2 style={{fontSize:'clamp(28px,4vw,46px)',letterSpacing:'-0.03em'}}>
-              Cybersecurity Engineered for{' '}
-              <em style={gradText}>Business Resilience</em>
-            </h2>
-            <p style={{color:'var(--text-1)',fontSize:'16px',lineHeight:'1.7'}}>
-              StradIT unites AI-driven threat modeling, precise engineering, and relentless managed defense to safeguard mission-critical assets, reduce business risk, and empower readiness for rapid change.
-            </p>
-          </div>
+          <h2 style={{fontSize:'clamp(28px,4vw,46px)',letterSpacing:'-0.03em',marginBottom:'16px'}}>
+            Cybersecurity Engineered for <em style={gradText}>Business Resilience</em>
+          </h2>
+          <p style={{color:'var(--text-1)',fontSize:'16px',lineHeight:'1.7',maxWidth:'680px',marginBottom:'40px'}}>
+            StradIT unites AI-driven threat modeling, precise engineering, and relentless managed defense to safeguard mission-critical assets, reduce business risk, and empower readiness for rapid change.
+          </p>
           <div className="cyber-approach-grid">
             {cards.map((card,i) => (
-              <article key={card.title} className={`cyber-approach-card reveal reveal-delay-${i+1}`}>
-                <div className="cyber-approach-card__num">0{i+1}</div>
-                <div>
-                  <h3>{card.title}</h3>
-                  <p>{card.desc}</p>
-                </div>
-              </article>
+              <details key={card.title} className={`text-expand-card reveal reveal-delay-${i+1}`}>
+                <summary>
+                  <span className="text-expand-card__title">{card.title}</span>
+                </summary>
+                <p className="text-expand-card__body">{card.desc}</p>
+              </details>
             ))}
           </div>
           <Link href="/contact" className="btn btn--ghost">
@@ -99,12 +103,13 @@ export default function CoeCyberPage() {
           </div>
         }
         tag="Case Study · Cyber Resiliency"
-        cardTitle={<>Zero Data Loss Readiness<br />Across 300+ Applications</>}
+        cardTitle={<>Zero Data Loss Readiness Across 300+ Applications</>}
         cardDesc="How StradIT helped a global asset management firm build bulletproof cyber resiliency — assessing, testing, and documenting every application with tailored playbooks and automated recovery tools."
         stats={[['300+','Apps Covered'],['Zero','Data Loss'],['2+ yrs','Partnership']]}
         href="/case-studies/cyber-resiliency"
       />
 
+      </main>
       <Footer />
     </>
   )

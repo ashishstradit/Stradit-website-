@@ -3,8 +3,10 @@ import Nav from '@/components/Nav'
 import Footer from '@/components/Footer'
 import AnimCanvas from '@/components/AnimCanvas'
 import CaseStudySection from '@/components/CaseStudySection'
+import { constructMetadata, PAGE_SEO } from '@/app/seo'
+import JsonLd, { getServiceSchema } from '@/components/JsonLd'
 
-export const metadata = { title: 'AI Solutions Center of Excellence — StradIT' }
+export const metadata = constructMetadata(PAGE_SEO.coeAi)
 
 const cards = [
   { title:'AI Engineering', desc:'From model designing to deployment, StradIT delivers meticulously formulated frameworks for AI solutions.', items:['Tailored ML and generative AI models','Accelerators and integration toolkits','LLMOps and MLOps foundations'] },
@@ -19,7 +21,13 @@ const gradText = { fontStyle:'normal' as const, background:'linear-gradient(120d
 export default function CoeAiPage() {
   return (
     <>
+      <JsonLd schema={getServiceSchema({
+        name: 'Applied AI Center of Excellence',
+        description: 'Build and deploy enterprise LLMs, agentic workflows, intelligent automation, and robust AI governance frameworks with StradIT.',
+        url: 'https://stradit.com/coe/ai'
+      })} />
       <Nav activePage="coe" />
+      <main id="main-content">
 
       {/* HERO */}
       <header className="hero hero--compact">
@@ -54,24 +62,26 @@ export default function CoeAiPage() {
       <section className="section">
         <div className="container">
           <div className="section-eyebrow"><span className="idx">01</span><span>Our Approach</span></div>
-          <div className="section-intro">
-            <h2 style={{fontSize:'clamp(28px,4vw,46px)',letterSpacing:'-0.03em'}}>
-              AI Engineered for <em style={gradText}>Real-World Impact</em>
-            </h2>
-            <p style={{color:'var(--text-1)',fontSize:'16px',lineHeight:'1.7'}}>
-              StradIT delivers measurable AI outcomes, not experiments. We pair deep engineering with strategic planning so every solution is designed to deploy, adopt, and perform, aligned to your business, risk posture, and operating model.
-            </p>
-          </div>
+          <h2 style={{fontSize:'clamp(28px,4vw,46px)',letterSpacing:'-0.03em',marginBottom:'16px'}}>
+            AI Engineered for <em style={gradText}>Real-World Impact</em>
+          </h2>
+          <p style={{color:'var(--text-1)',fontSize:'16px',lineHeight:'1.7',maxWidth:'680px',marginBottom:'40px'}}>
+            StradIT delivers measurable AI outcomes, not experiments. We pair deep engineering with strategic planning so every solution is designed to deploy, adopt, and perform, aligned to your business, risk posture, and operating model.
+          </p>
           <div className="ai-approach-grid">
             {cards.map((card,i) => (
-              <article key={card.title} className={`ai-approach-card reveal reveal-delay-${Math.min(i+1, 5)}`}>
-                <div className="ai-approach-card__top">
-                  <span className="ai-approach-card__num">{String(i+1).padStart(2,'0')}</span>
-                  <span className="ai-approach-card__pill">AI CoE</span>
-                </div>
-                <h3>{card.title}</h3>
-                <p>{card.desc}</p>
-              </article>
+              <details key={card.title} className={`text-expand-card reveal reveal-delay-${Math.min(i+1, 5)}`}>
+                <summary>
+                  <span className="text-expand-card__title">
+                    {card.title}
+                    <span className="text-expand-card__meta">AI CoE</span>
+                  </span>
+                </summary>
+                <p className="text-expand-card__body">{card.desc}</p>
+                <ul className="text-expand-card__list">
+                  {card.items.map(item => <li key={item}>{item}</li>)}
+                </ul>
+              </details>
             ))}
           </div>
           <Link href="/contact" className="btn btn--ghost">
@@ -99,12 +109,13 @@ export default function CoeAiPage() {
           </div>
         }
         tag="Case Study · Applied AI"
-        cardTitle={<>70% Faster Due Diligence with<br />Purpose-Built AI Agents</>}
+        cardTitle={<>70% Faster Due Diligence with Purpose-Built AI Agents</>}
         cardDesc="How StradIT built a digital AI workforce that cut a 2-week due diligence cycle to 2 minutes — operating 24/7 across 50+ jurisdictions, delivering a 5,000% ROI for a global financial organisation."
         stats={[['70%+','Faster Due Diligence'],['5,000%','ROI'],['24/7','50+ Jurisdictions']]}
         href="/case-studies/ai-agents"
       />
 
+      </main>
       <Footer />
     </>
   )

@@ -258,6 +258,11 @@
     }
 
     function frame(ts) {
+    if (!canvas || !canvas.isConnected) return;
+    if (canvas.__straditIsIntersecting === false) {
+      setTimeout(function() { requestAnimationFrame(frame); }, 250);
+      return;
+    }
       t += 0.016;
       ctx.fillStyle = theme.bg;
       ctx.fillRect(0, 0, W, H);
@@ -466,6 +471,11 @@
     window.addEventListener("resize", () => { resize(); init(); });
 
     function frame() {
+    if (!canvas || !canvas.isConnected) return;
+    if (canvas.__straditIsIntersecting === false) {
+      setTimeout(function() { requestAnimationFrame(frame); }, 250);
+      return;
+    }
       t += 0.016;
       ctx.fillStyle = theme.bg;
       ctx.fillRect(0, 0, W, H);
@@ -580,6 +590,11 @@
     }
 
     function frame(ts) {
+    if (!canvas || !canvas.isConnected) return;
+    if (canvas.__straditIsIntersecting === false) {
+      setTimeout(function() { requestAnimationFrame(frame); }, 250);
+      return;
+    }
       t += 0.016;
       ctx.fillStyle = theme.bg;
       ctx.fillRect(0, 0, W, H);
@@ -832,6 +847,11 @@
     window.addEventListener("resize", () => { resize(); init(); });
 
     function frame() {
+    if (!canvas || !canvas.isConnected) return;
+    if (canvas.__straditIsIntersecting === false) {
+      setTimeout(function() { requestAnimationFrame(frame); }, 250);
+      return;
+    }
       t += 0.016;
       ctx.fillStyle = theme.bg;
       ctx.fillRect(0, 0, W, H);
@@ -911,6 +931,11 @@
     window.addEventListener("resize", () => { resize(); init(); });
 
     function frame() {
+    if (!canvas || !canvas.isConnected) return;
+    if (canvas.__straditIsIntersecting === false) {
+      setTimeout(function() { requestAnimationFrame(frame); }, 250);
+      return;
+    }
       t += 0.016;
       ctx.fillStyle = "rgba(6,9,18,0.25)";
       ctx.fillRect(0, 0, W, H);
@@ -1097,6 +1122,11 @@
     }
 
     function frame(ts) {
+    if (!canvas || !canvas.isConnected) return;
+    if (canvas.__straditIsIntersecting === false) {
+      setTimeout(function() { requestAnimationFrame(frame); }, 250);
+      return;
+    }
       t += 0.016;
       ctx.fillStyle = theme.bg;
       ctx.fillRect(0, 0, W, H);
@@ -1410,6 +1440,11 @@
     }
 
     function frame(ts) {
+    if (!canvas || !canvas.isConnected) return;
+    if (canvas.__straditIsIntersecting === false) {
+      setTimeout(function() { requestAnimationFrame(frame); }, 250);
+      return;
+    }
       t += 0.016;
       ctx.fillStyle = theme.bg;
       ctx.fillRect(0, 0, W, H);
@@ -1651,6 +1686,11 @@
     }
 
     function frame() {
+    if (!canvas || !canvas.isConnected) return;
+    if (canvas.__straditIsIntersecting === false) {
+      setTimeout(function() { requestAnimationFrame(frame); }, 250);
+      return;
+    }
       t += 0.016;
       const cx = W * 0.62, cy = H * 0.5;
       const R = Math.min(W, H) * 0.32;
@@ -1787,6 +1827,11 @@
     window.addEventListener("resize", () => { resize(); init(); });
 
     function frame(ts) {
+    if (!canvas || !canvas.isConnected) return;
+    if (canvas.__straditIsIntersecting === false) {
+      setTimeout(function() { requestAnimationFrame(frame); }, 250);
+      return;
+    }
       t += 0.016;
       ctx.fillStyle = theme.bg;
       ctx.fillRect(0, 0, W, H);
@@ -2022,6 +2067,11 @@
       }
     }
     function frame() {
+    if (!canvas || !canvas.isConnected) return;
+    if (canvas.__straditIsIntersecting === false) {
+      setTimeout(function() { requestAnimationFrame(frame); }, 250);
+      return;
+    }
       t += 0.016;
       const cx = W * 0.62, cy = H * 0.5;
       ctx.fillStyle = theme.bg;
@@ -2078,6 +2128,11 @@
       W = r.width; H = r.height;
     }
     function frame() {
+    if (!canvas || !canvas.isConnected) return;
+    if (canvas.__straditIsIntersecting === false) {
+      setTimeout(function() { requestAnimationFrame(frame); }, 250);
+      return;
+    }
       t += 0.016;
       const cx = W * 0.62, cy = H * 0.5;
       ctx.fillStyle = theme.bg;
@@ -2195,6 +2250,11 @@
 
     let rafId = 0;
     function frame(ts) {
+    if (!canvas || !canvas.isConnected) return;
+    if (canvas.__straditIsIntersecting === false) {
+      setTimeout(function() { requestAnimationFrame(frame); }, 250);
+      return;
+    }
       t += 0.016;
       ctx.fillStyle = '#060912';
       ctx.fillRect(0, 0, W, H);
@@ -2333,6 +2393,11 @@
     window.addEventListener("resize", () => { resize(); init2(); });
 
     function frame(ts) {
+    if (!canvas || !canvas.isConnected) return;
+    if (canvas.__straditIsIntersecting === false) {
+      setTimeout(function() { requestAnimationFrame(frame); }, 250);
+      return;
+    }
       t += 0.016;
       ctx.fillStyle = theme.bg; ctx.fillRect(0, 0, W, H);
 

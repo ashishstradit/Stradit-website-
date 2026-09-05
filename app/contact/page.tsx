@@ -24,6 +24,7 @@ export default function ContactPage() {
   return (
     <>
       <Nav />
+      <main id="main-content">
 
       {/* HERO */}
       <header className="hero hero--compact">
@@ -31,7 +32,7 @@ export default function ContactPage() {
         <div className="container hero__inner">
           <div className="hero__eyebrow eyebrow">Contact Us</div>
           <h1 className="hero__title">
-            Big ideas deserve<br/><em>real conversations.</em>
+            Big ideas deserve <em>real conversations.</em>
           </h1>
           <p className="hero__sub">
             Got a question? A challenge? A vision that needs a partner?<br/>
@@ -58,7 +59,7 @@ export default function ContactPage() {
               {/* Reach Out Your Way */}
               <div>
                 <div className="section-eyebrow"><span className="idx">01</span><span>Reach Out Your Way</span></div>
-                <h2 style={{fontSize:'clamp(24px,3vw,36px)',letterSpacing:'-0.03em',marginBottom:'24px'}}>Reach Out Your Way</h2>
+                <h2 style={{fontSize:'clamp(24px,3vw,36px)',letterSpacing:'-0.03em',marginBottom:'24px'}}>Reach Out <em style={{fontStyle:'normal',background:'linear-gradient(120deg,var(--accent),var(--accent-2))',WebkitBackgroundClip:'text',backgroundClip:'text',color:'transparent'}}>Your Way</em></h2>
                 <div style={{display:'flex',flexDirection:'column',gap:'12px'}}>
                   {[
                     {label:'General Enquiries',email:'reachout@stradit.com'},
@@ -81,13 +82,13 @@ export default function ContactPage() {
               {/* Follow the Journey */}
               <div>
                 <div className="section-eyebrow"><span className="idx">03</span><span>Follow the Journey</span></div>
-                <h2 style={{fontSize:'clamp(24px,3vw,36px)',letterSpacing:'-0.03em',marginBottom:'8px'}}>Follow the Journey</h2>
+                <h2 style={{fontSize:'clamp(24px,3vw,36px)',letterSpacing:'-0.03em',marginBottom:'8px'}}>Follow the <em style={{fontStyle:'normal',background:'linear-gradient(120deg,var(--accent),var(--accent-2))',WebkitBackgroundClip:'text',backgroundClip:'text',color:'transparent'}}>Journey</em></h2>
                 <p style={{color:'var(--text-2)',fontSize:'14px',marginBottom:'24px'}}>Let&apos;s build something remarkable together.</p>
                 <div style={{display:'flex',flexDirection:'column',gap:'12px'}}>
                   {[
                     {name:'LinkedIn',url:'https://www.linkedin.com/in/stradit-llc',icon:<><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></>},
-                    {name:'Facebook',url:'https://facebook.com/stradit',icon:<path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/>},
-                    {name:'Instagram',url:'https://instagram.com/stradit',icon:<><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></>},
+                    {name:'Facebook',url:'https://www.facebook.com/people/Stradit-Reachout/pfbid032uUHtYjJCcvY4dc4p5K194jTMZ2ohD2pTbqpRq3TcYCmUfAmijVtNYVQe8sM7jPpl/',icon:<path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/>},
+                    {name:'Instagram',url:'https://www.instagram.com/stradit23/',icon:<><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></>},
                   ].map(s=>(
                     <a key={s.name} href={s.url} target="_blank" rel="noopener noreferrer"
                       style={{display:'flex',alignItems:'center',gap:'14px',background:'var(--ink-1)',border:'1px solid var(--line)',borderRadius:'var(--radius)',padding:'16px 20px',transition:'all .2s ease',color:'inherit',textDecoration:'none'}}
@@ -107,7 +108,7 @@ export default function ContactPage() {
             {/* RIGHT — Contact Form */}
             <div>
               <div className="section-eyebrow"><span className="idx">02</span><span>Send Us a Message</span></div>
-              <h2 style={{fontSize:'clamp(24px,3vw,36px)',letterSpacing:'-0.03em',marginBottom:'32px'}}>Send Us a Message</h2>
+              <h2 style={{fontSize:'clamp(24px,3vw,36px)',letterSpacing:'-0.03em',marginBottom:'32px'}}>Send Us a <em style={{fontStyle:'normal',background:'linear-gradient(120deg,var(--accent),var(--accent-2))',WebkitBackgroundClip:'text',backgroundClip:'text',color:'transparent'}}>Message</em></h2>
 
               {!submitted ? (
                 <form onSubmit={handleSubmit} style={{display:'flex',flexDirection:'column',gap:'16px'}}>
@@ -167,6 +168,7 @@ export default function ContactPage() {
         </div>
       </section>
 
+      </main>
       <Footer />
     </>
   )

@@ -1,49 +1,42 @@
 <!DOCTYPE html>
 <html>
 <head>
-<link href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@700&display=swap" rel="stylesheet">
+<meta charset="utf-8"/>
 <style>
-  body { margin: 0; background: transparent; }
+  body { background: #060912; display: flex; align-items: center; justify-content: center; min-height: 100vh; margin: 0; font-family: "Inter Tight", system-ui, sans-serif; gap: 48px; flex-wrap: wrap; }
+  .logo { display: flex; align-items: center; gap: 8px; }
+  .brand-strad { color: #ff7a3d; font-weight: 700; font-size: 28px; letter-spacing: 0.04em; }
+  .brand-it { color: #f5f7fb; font-weight: 700; font-size: 28px; letter-spacing: 0.04em; }
+  .icon-only { padding: 32px; background: #0a1020; border-radius: 16px; }
+  .full-logo { padding: 32px 48px; background: #0a1020; border-radius: 16px; }
 </style>
 </head>
 <body>
 
-<svg id="full-logo" width="320" height="80" viewBox="0 0 320 80" fill="none" xmlns="http://www.w3.org/2000/svg">
-  <!-- Icon -->
-  <polygon points="40,10 56,19 56,37 40,46 24,37 24,19" fill="#ff7a3d" stroke="#ff7a3d" stroke-width="2"/>
-  <circle cx="40" cy="28" r="5.5" fill="#ffffff"/>
-  <line x1="40" y1="22.5" x2="40" y2="11" stroke="#ffffff" stroke-width="3" stroke-linecap="round"/>
-  <line x1="44.8" y1="30.8" x2="55" y2="36.5" stroke="#ffffff" stroke-width="3" stroke-linecap="round"/>
-  <line x1="35.2" y1="30.8" x2="25" y2="36.5" stroke="#ffffff" stroke-width="3" stroke-linecap="round"/>
+  <!-- Icon only -->
+  <div class="icon-only">
+    <svg width="48" height="48" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <polygon points="12,3 20,7.5 20,16.5 12,21 4,16.5 4,7.5" fill="#ff7a3d" stroke="#ff7a3d" stroke-width="1.2"/>
+      <circle cx="12" cy="12" r="2.8" fill="#ffffff"/>
+      <line x1="12" y1="9.2" x2="12" y2="3.5" stroke="#ffffff" stroke-width="1.6" stroke-linecap="round"/>
+      <line x1="14.4" y1="13.4" x2="19.5" y2="16.2" stroke="#ffffff" stroke-width="1.6" stroke-linecap="round"/>
+      <line x1="9.6" y1="13.4" x2="4.5" y2="16.2" stroke="#ffffff" stroke-width="1.6" stroke-linecap="round"/>
+    </svg>
+  </div>
 
-  <!-- STRAD in orange -->
-  <text x="72" y="38" font-family="'Inter Tight', sans-serif" font-weight="700" font-size="28" letter-spacing="2" fill="#ff7a3d">STRAD</text>
-  <!-- IT in white -->
-  <text x="185" y="38" font-family="'Inter Tight', sans-serif" font-weight="700" font-size="28" letter-spacing="2" fill="#f5f7fb">IT</text>
-</svg>
+  <!-- Full logo -->
+  <div class="full-logo">
+    <div class="logo">
+      <svg width="36" height="36" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <polygon points="12,3 20,7.5 20,16.5 12,21 4,16.5 4,7.5" fill="#ff7a3d" stroke="#ff7a3d" stroke-width="1.2"/>
+        <circle cx="12" cy="12" r="2.8" fill="#ffffff"/>
+        <line x1="12" y1="9.2" x2="12" y2="3.5" stroke="#ffffff" stroke-width="1.6" stroke-linecap="round"/>
+        <line x1="14.4" y1="13.4" x2="19.5" y2="16.2" stroke="#ffffff" stroke-width="1.6" stroke-linecap="round"/>
+        <line x1="9.6" y1="13.4" x2="4.5" y2="16.2" stroke="#ffffff" stroke-width="1.6" stroke-linecap="round"/>
+      </svg>
+      <span class="brand-strad">STRAD</span><span class="brand-it">IT</span>
+    </div>
+  </div>
 
-<script>
-window.onload = function() {
-  setTimeout(() => {
-    const svg = document.getElementById('full-logo');
-    const canvas = document.createElement('canvas');
-    canvas.width = 640; canvas.height = 160;
-    const ctx = canvas.getContext('2d');
-    const svgData = new XMLSerializer().serializeToString(svg);
-    const svgBlob = new Blob([svgData], {type: 'image/svg+xml;charset=utf-8'});
-    const url = URL.createObjectURL(svgBlob);
-    const img = new Image();
-    img.onload = () => {
-      ctx.drawImage(img, 0, 0, 640, 160);
-      const a = document.createElement('a');
-      a.download = 'stradit-logo-full.png';
-      a.href = canvas.toDataURL('image/png');
-      a.click();
-      URL.revokeObjectURL(url);
-    };
-    img.src = url;
-  }, 800);
-};
-</script>
 </body>
 </html>

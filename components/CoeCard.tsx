@@ -8,6 +8,7 @@ type CoeCardProps = {
   href: string
   size: 'lg' | 'md' | 'sm'
   revealClass?: string
+  interactionGroup?: string
   style?: CSSProperties
   visualStyle?: CSSProperties
   badge: string
@@ -25,6 +26,7 @@ export default function CoeCard({
   href,
   size,
   revealClass = '',
+  interactionGroup,
   style,
   visualStyle,
   badge,
@@ -65,20 +67,37 @@ export default function CoeCard({
     return () => observer.disconnect()
   }, [animDelay])
 
+  const clearSiblingActiveCards = () => {
+    const card = ref.current
+    const rail = card?.closest('.coe-rail')
+
+    rail?.querySelectorAll('.coe-card--active').forEach((activeCard) => {
+      activeCard.classList.remove('coe-card--active')
+    })
+  }
+
+  const activateCard = () => {
+    if (!interactionGroup || !ref.current) return
+    clearSiblingActiveCards()
+    ref.current.classList.add('coe-card--active')
+  }
+
+  const deactivateCard = () => {
+    if (!interactionGroup || !ref.current) return
+    ref.current.classList.remove('coe-card--active')
+  }
+
   return (
     <article
       ref={ref}
-      className={`coe-card coe-card--${size} ${revealClass}${visible ? ' coe-card--visible in' : ''}${open ? ' coe-card--open' : ''}`.trim()}
+      className={`coe-card coe-card--${size} ${revealClass}${interactionGroup ? ' coe-card--controlled' : ''}${visible ? ' coe-card--visible in' : ''}${open ? ' coe-card--open' : ''}`.trim()}
       style={style}
+      onMouseEnter={activateCard}
+      onMouseLeave={deactivateCard}
     >
       {/* Canvas visual — navigates on click */}
       <Link href={href} className="coe-card__visual" style={visualStyle} tabIndex={-1} aria-hidden="true">
         <span className="coe-card__badge">{badge}</span>
-        <span className="coe-card__chip">
-          {chips.map((chip) => (
-            <span key={chip}>{chip}</span>
-          ))}
-        </span>
         <AnimCanvas theme={theme} animKey={animKey} />
       </Link>
 

@@ -7,6 +7,16 @@ export default function ScrollReveal() {
   const pathname = usePathname()
 
   useEffect(() => {
+    // Auto-tag all section.section elements that don't already have reveal
+    document.querySelectorAll<HTMLElement>('section.section:not(.reveal)').forEach((el) => {
+      el.classList.add('reveal')
+    })
+
+    // Also tag cs-offerings-toggle containers
+    document.querySelectorAll<HTMLElement>('.cs-offerings-toggle:not(.reveal)').forEach((el) => {
+      el.classList.add('reveal')
+    })
+
     const elements = Array.from(document.querySelectorAll<HTMLElement>('.reveal'))
 
     if (elements.length === 0) return
@@ -18,37 +28,38 @@ export default function ScrollReveal() {
       return
     }
 
-    const isInInitialView = (element: HTMLElement) => {
-      const rect = element.getBoundingClientRect()
-      const viewportHeight = window.innerHeight || document.documentElement.clientHeight
-
-      return rect.top < viewportHeight * 0.88 && rect.bottom > 0
-    }
+    const viewportHeight = window.innerHeight || document.documentElement.clientHeight
 
     const observer = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
           if (!entry.isIntersecting) return
-
           entry.target.classList.add('in')
           observer.unobserve(entry.target)
         })
       },
       {
-        rootMargin: '0px 0px -12% 0px',
-        threshold: 0.12,
+        rootMargin: '0px 0px -8% 0px',
+        threshold: 0.08,
       }
     )
 
-    elements.forEach((element) => {
+    // 1. Read phase: Batch all layout reads first to avoid style invalidation overhead
+    const bounds = elements.map((element) => ({
+      element,
+      rect: element.getBoundingClientRect(),
+    }))
+
+    // 2. Write phase: Perform DOM modifications
+    bounds.forEach(({ element, rect }) => {
       element.classList.remove('in')
 
-      if (isInInitialView(element)) {
+      const inView = rect.top < viewportHeight * 0.92 && rect.bottom > 0
+      if (inView) {
         element.classList.add('in')
-        return
+      } else {
+        observer.observe(element)
       }
-
-      observer.observe(element)
     })
 
     return () => observer.disconnect()

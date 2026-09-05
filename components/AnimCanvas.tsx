@@ -37,6 +37,17 @@ export default function AnimCanvas({ theme, animKey }: Props) {
     const canvas = canvasRef.current
     if (!canvas) return
 
+    // Setup visibility observer
+    let observer: IntersectionObserver | null = null;
+    if ('IntersectionObserver' in window) {
+      observer = new IntersectionObserver(([entry]) => {
+        (canvas as any).__straditIsIntersecting = entry.isIntersecting;
+      }, { threshold: 0.01 });
+      observer.observe(canvas);
+    } else {
+      (canvas as any).__straditIsIntersecting = true;
+    }
+
     const rafId = requestAnimationFrame(() => {
       const existingEl = document.getElementById('stradit-anim-engine') as HTMLScriptElement | null
       const versionMatches = existingEl?.dataset.straditVer === ANIM_ENGINE_VER
@@ -65,7 +76,10 @@ export default function AnimCanvas({ theme, animKey }: Props) {
       script.id = 'stradit-anim-engine'
       script.dataset.straditVer = ANIM_ENGINE_VER
       script.src = `/anim-engine.js?v=${ANIM_ENGINE_VER}`
+      script.async = true
       script.onload = () => {
+        // Force layout recalc so setupHiDPI gets correct dimensions on static hosts
+        window.dispatchEvent(new Event('resize'))
         if (window.__straditAnimSingle) {
           document.querySelectorAll<HTMLCanvasElement>('canvas[data-hero-anim]').forEach(c => {
             window.__straditAnimSingle!(c)
@@ -77,6 +91,9 @@ export default function AnimCanvas({ theme, animKey }: Props) {
 
     return () => {
       cancelAnimationFrame(rafId)
+      if (observer) {
+        observer.disconnect()
+      }
       const c = canvasRef.current as HeroCanvas | null
       if (c && typeof c.__straditCareersStop === 'function') {
         c.__straditCareersStop()

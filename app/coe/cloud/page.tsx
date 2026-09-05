@@ -3,8 +3,10 @@ import Nav from '@/components/Nav'
 import Footer from '@/components/Footer'
 import AnimCanvas from '@/components/AnimCanvas'
 import CaseStudySection from '@/components/CaseStudySection'
+import { constructMetadata, PAGE_SEO } from '@/app/seo'
+import JsonLd, { getServiceSchema } from '@/components/JsonLd'
 
-export const metadata = { title: 'Cloud & Infrastructure — Applied AI — StradIT' }
+export const metadata = constructMetadata(PAGE_SEO.coeCloud)
 
 const cards = [
   { title:'End-to-End Consulting & Service Delivery', desc:'Identify needs, understand the utility of different cloud infrastructures, and make informed decisions.', items:['Cloud readiness assessment and a clear migration roadmap','Architectures balancing performance, cost, and flexibility across platforms','Legacy modernization planning to move from outdated systems to cloud'] },
@@ -16,7 +18,13 @@ const gradText = { fontStyle:'normal' as const, background:'linear-gradient(120d
 export default function CoeCloudPage() {
   return (
     <>
+      <JsonLd schema={getServiceSchema({
+        name: 'Cloud & Infrastructure Center of Excellence',
+        description: 'Optimize cloud efficiency, performance, and SRE resilience. Our team guides AI-assisted migrations, platform engineering, and automated scaling.',
+        url: 'https://stradit.com/coe/cloud'
+      })} />
       <Nav activePage="coe" />
+      <main id="main-content">
 
       {/* HERO */}
       <header className="hero hero--compact">
@@ -48,7 +56,7 @@ export default function CoeCloudPage() {
       <div className="stats-bar">
         <div className="container">
           <div className="hero__meta">
-            <div className="hero__meta-cell"><div className="hero__meta-k">Cost Reduction</div><div className="hero__meta-v">34%</div><div className="hero__meta-k">avg. landing-zone client</div></div>
+            <div className="hero__meta-cell"><div className="hero__meta-k">Automation</div><div className="hero__meta-v">100% IaC</div><div className="hero__meta-k">templated deployment</div></div>
             <div className="hero__meta-cell"><div className="hero__meta-k">Uptime</div><div className="hero__meta-v">99.99%</div><div className="hero__meta-k">platform SLO default</div></div>
             <div className="hero__meta-cell"><div className="hero__meta-k">Migrations</div><div className="hero__meta-v">500+ apps</div><div className="hero__meta-k">across 30+ programs</div></div>
             <div className="hero__meta-cell"><div className="hero__meta-k">Multi-cloud</div><div className="hero__meta-v">AWS · Azure · GCP</div><div className="hero__meta-k">+ on-prem hybrid</div></div>
@@ -60,24 +68,23 @@ export default function CoeCloudPage() {
       <section className="section">
         <div className="container">
           <div className="section-eyebrow"><span className="idx">01</span><span>Our Approach</span></div>
-          <div className="section-intro">
-            <h2 style={{fontSize:'clamp(28px,4vw,46px)',letterSpacing:'-0.03em'}}>
-              Shaping Cloud You Need <em style={gradText}>With Conviction</em>
-            </h2>
-            <p style={{color:'var(--text-1)',fontSize:'16px',lineHeight:'1.7'}}>
-              From early discovery and planning to 24/7 operations, we partner with you to build resilient, AI-optimized cloud systems built for production.
-            </p>
-          </div>
+          <h2 style={{fontSize:'clamp(28px,4vw,46px)',letterSpacing:'-0.03em',marginBottom:'16px'}}>
+            Shaping Cloud You Need <em style={gradText}>With Conviction</em>
+          </h2>
+          <p style={{color:'var(--text-1)',fontSize:'16px',lineHeight:'1.7',maxWidth:'680px',marginBottom:'40px'}}>
+            From early discovery and planning to 24/7 operations, we partner with you to build resilient, AI-optimized cloud systems built for production.
+          </p>
           <div className="cards-2">
             {cards.map((card,i) => (
-              <div key={card.title} className={`reveal reveal-delay-${i+1}`} style={{background:'var(--ink-1)',padding:'40px 36px',display:'flex',flexDirection:'column',gap:'16px'}}>
-                <div style={{fontFamily:'var(--font-mono)',fontSize:'10px',letterSpacing:'0.16em',color:'var(--accent)'}}>0{i+1}</div>
-                <div style={{fontFamily:'var(--font-display)',fontSize:'20px',fontWeight:500,letterSpacing:'-0.02em'}}>{card.title}</div>
-                <p style={{color:'var(--text-2)',fontSize:'13px',lineHeight:'1.65',flex:1}}>{card.desc}</p>
-                <ul style={{listStyle:'none',display:'flex',flexDirection:'column',gap:'6px'}}>
-                  {card.items.map(item => <li key={item} style={{fontSize:'13px',color:'var(--text-1)',display:'flex',gap:'8px'}}><span style={{color:'var(--accent)',flexShrink:0}}>→</span>{item}</li>)}
+              <details key={card.title} className={`text-expand-card reveal reveal-delay-${i+1}`}>
+                <summary>
+                  <span className="text-expand-card__title">{card.title}</span>
+                </summary>
+                <p className="text-expand-card__body">{card.desc}</p>
+                <ul className="text-expand-card__list">
+                  {card.items.map(item => <li key={item}>{item}</li>)}
                 </ul>
-              </div>
+              </details>
             ))}
           </div>
           <Link href="/contact" className="btn btn--ghost">
@@ -95,7 +102,7 @@ export default function CoeCloudPage() {
               Cloud Outcomes That Actually <em style={gradText}>Hold Up In Production</em>
             </h2>
             <p style={{color:'var(--text-1)',fontSize:'16px',lineHeight:'1.7',marginBottom:'32px',maxWidth:'680px'}}>
-              Wondering how cloud becomes the backbone of modern businesses? Open the full case study to see how our advisory fixed operational costs, tamed licence spend, and laid the foundation for stable growth.
+              Wondering how cloud becomes the backbone of modern businesses? Open the full case study to see how our advisory optimised operations, aligned resource governance, and laid the foundation for stable growth.
             </p>
             <Link href="/contact" className="btn btn--primary">
               Redefine Cloud With StradIT
@@ -104,12 +111,13 @@ export default function CoeCloudPage() {
           </div>
         }
         tag="Case Study · Cloud & Infrastructure"
-        cardTitle={<>30% Less Operations Cost with<br />Expert Cloud Advisory</>}
-        cardDesc="How StradIT helped a US-based financial institution move from a fragmented legacy data-centre landscape to a cloud-ready, cost-optimised portfolio — without compromising regulatory or data-residency requirements."
-        stats={[['30%','Less Ops Cost'],['70%','Less Licence Cost'],['50%','Faster Deployment']]}
+        cardTitle={<>Enterprise Cloud Modernisation with Expert Cloud Advisory</>}
+        cardDesc="How StradIT helped a US-based financial institution move from a fragmented legacy data-centre landscape to a cloud-ready, optimised portfolio — without compromising regulatory or data-residency requirements."
+        stats={[['Unified','Observability'],['Multi-Cloud','Ready'],['50%','Faster Deployment']]}
         href="/case-studies/cloud-advisory"
       />
 
+      </main>
       <Footer />
     </>
   )

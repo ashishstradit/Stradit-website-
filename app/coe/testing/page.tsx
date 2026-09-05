@@ -3,15 +3,23 @@ import Nav from '@/components/Nav'
 import Footer from '@/components/Footer'
 import AnimCanvas from '@/components/AnimCanvas'
 import CaseStudySection from '@/components/CaseStudySection'
+import { constructMetadata, PAGE_SEO } from '@/app/seo'
+import JsonLd, { getServiceSchema } from '@/components/JsonLd'
 
-export const metadata = { title: 'Automated AI Testing — StradIT' }
+export const metadata = constructMetadata(PAGE_SEO.coeTesting)
 
 const gradText = { fontStyle:'normal' as const, background:'linear-gradient(120deg,var(--accent),var(--accent-2))', WebkitBackgroundClip:'text' as const, backgroundClip:'text' as const, color:'transparent' as const }
 
 export default function CoeTestingPage() {
   return (
     <>
+      <JsonLd schema={getServiceSchema({
+        name: 'Automated AI Testing Center of Excellence',
+        description: 'Ship faster with continuous quality assurance. Our automated testing practice implements AI-driven verification and deep load/resiliency testing.',
+        url: 'https://stradit.com/coe/testing'
+      })} />
       <Nav activePage="coe" />
+      <main id="main-content">
 
       {/* HERO */}
       <header className="hero hero--compact">
@@ -55,27 +63,24 @@ export default function CoeTestingPage() {
       <section className="section">
         <div className="container">
           <div className="section-eyebrow"><span className="idx">01</span><span>Our Approach</span></div>
-          <div className="section-intro">
-            <h2 style={{fontSize:'clamp(28px,4vw,46px)',letterSpacing:'-0.03em'}}>
-              Precision-Driven Testing for <em style={gradText}>Confident Delivery</em>
-            </h2>
-            <p style={{color:'var(--text-1)',fontSize:'16px',lineHeight:'1.7'}}>
-              We bring quality into the full product lifecycle, from early validation to release readiness. Our approach combines proven QA practices with AI-assisted test optimization and business-aligned strategies, so teams can move fast without adding risk.
-            </p>
-          </div>
+          <h2 style={{fontSize:'clamp(28px,4vw,46px)',letterSpacing:'-0.03em',marginBottom:'16px'}}>
+            Precision-Driven Testing for <em style={gradText}>Confident Delivery</em>
+          </h2>
+          <p style={{color:'var(--text-1)',fontSize:'16px',lineHeight:'1.7',maxWidth:'680px',marginBottom:'40px'}}>
+            We bring quality into the full product lifecycle, from early validation to release readiness. Our approach combines proven QA practices with AI-assisted test optimization and business-aligned strategies, so teams can move fast without adding risk.
+          </p>
           <div className="cyber-approach-grid">
             {[
               { title:'QA Lifecycle Support', desc:'Testing strategy, automation, and release readiness built into every stage.' },
               { title:'Quality Engineering Frameworks', desc:'Reusable AI-assisted frameworks that reduce QA overhead and delivery risk.' },
               { title:'Domain-Specific Testing', desc:'Context-aware validation for secure, compliant, and trusted products.' },
             ].map((card,i)=>(
-              <article key={card.title} className={`cyber-approach-card reveal reveal-delay-${i+1}`}>
-                <div className="cyber-approach-card__num">0{i+1}</div>
-                <div>
-                  <h3>{card.title}</h3>
-                  <p>{card.desc}</p>
-                </div>
-              </article>
+              <details key={card.title} className={`text-expand-card reveal reveal-delay-${i+1}`}>
+                <summary>
+                  <span className="text-expand-card__title">{card.title}</span>
+                </summary>
+                <p className="text-expand-card__body">{card.desc}</p>
+              </details>
             ))}
           </div>
           <Link href="/contact" className="btn btn--ghost">
@@ -103,12 +108,13 @@ export default function CoeTestingPage() {
           </div>
         }
         tag="Case Study · Automated AI Testing"
-        cardTitle={<>Zero Licensing &amp; Unmatched Results:<br />The StradIT Difference</>}
+        cardTitle={<>Open-Source Framework &amp; Unmatched Results: The StradIT Difference</>}
         cardDesc="Breaking free from expensive, complex testing frameworks is not a dream anymore. Discover how a global investment bank modernised its automation with a framework anyone on the team can use."
-        stats={[['Zero','Licensing Costs'],['70+','QA Experts'],['5-Step','Transformation']]}
+        stats={[['Open-Source','Robot Framework'],['70+','QA Experts'],['5-Step','Transformation']]}
         href="/case-studies/automated-ai-testing"
       />
 
+      </main>
       <Footer />
     </>
   )

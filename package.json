@@ -4,18 +4,24 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
-    "build": "next build",
+    "build": "next build && terser out/anim-engine.js -o out/anim-engine.js --compress --mangle",
     "start": "next start"
   },
   "dependencies": {
+    "compression": "^1.8.1",
+    "express": "^5.2.1",
     "next": "^14.2.29",
     "react": "^18",
     "react-dom": "^18"
   },
   "devDependencies": {
+    "@fullhuman/postcss-purgecss": "^8.0.0",
     "@types/node": "^20",
     "@types/react": "^18",
     "@types/react-dom": "^18",
+    "postcss-flexbugs-fixes": "^5.0.2",
+    "postcss-preset-env": "^11.3.2",
+    "terser": "^5.49.0",
     "typescript": "^5"
   }
 }

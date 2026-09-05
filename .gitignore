@@ -6,3 +6,48 @@ package-lock.json
 stradit-next/node_modules/
 stradit-next/.next/
 stradit-next/package-lock.json
+
+# Build output
+out/
+out-build.zip
+build.zip
+project.zip
+*.zip
+
+# Secrets & keys
+*.pem
+*.key
+*.cert
+*.p12
+*.pfx
+.secret*
+secrets/
+credentials/
+*credentials*
+*secret*
+*api-key*
+*apikey*
+
+# Test files
+*.test.ts
+*.test.tsx
+*.test.js
+*.spec.ts
+*.spec.tsx
+*.spec.js
+__tests__/
+coverage/
+.nyc_output/
+
+# OS & editor
+.DS_Store
+Thumbs.db
+.vscode/settings.json
+.idea/
+
+# Misc
+tsconfig.tsbuildinfo
+report.json
+
+# Unused HTML prototype files
+*.html

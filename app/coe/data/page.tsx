@@ -3,8 +3,10 @@ import Nav from '@/components/Nav'
 import Footer from '@/components/Footer'
 import AnimCanvas from '@/components/AnimCanvas'
 import CaseStudySection from '@/components/CaseStudySection'
+import { constructMetadata, PAGE_SEO } from '@/app/seo'
+import JsonLd, { getServiceSchema } from '@/components/JsonLd'
 
-export const metadata = { title: 'Data Analytics — Applied AI — StradIT' }
+export const metadata = constructMetadata(PAGE_SEO.coeData)
 
 const cards = [
   {
@@ -30,7 +32,13 @@ const gradText = { fontStyle:'normal' as const, background:'linear-gradient(120d
 export default function CoeDataPage() {
   return (
     <>
+      <JsonLd schema={getServiceSchema({
+        name: 'Data Analytics Center of Excellence',
+        description: 'Modernize your data infrastructure, establish real-time streaming analytics, and build AI-powered executive dashboards with StradIT.',
+        url: 'https://stradit.com/coe/data'
+      })} />
       <Nav activePage="coe" />
+      <main id="main-content">
 
       {/* HERO */}
       <header className="hero hero--compact">
@@ -68,26 +76,24 @@ export default function CoeDataPage() {
       <section className="section">
         <div className="container">
           <div className="section-eyebrow"><span className="idx">01</span><span>Our Approach</span></div>
-          <div className="section-intro">
-            <h2 style={{fontSize:'clamp(28px,4vw,46px)',letterSpacing:'-0.03em'}}>
-              Turn Data into a <em style={gradText}>Power Move</em>
-            </h2>
-            <p style={{color:'var(--text-1)',fontSize:'16px',lineHeight:'1.7'}}>
-              Data is everywhere. Value isn't. Our end-to-end analytics services help you connect the dots across high-volume, multi-source data and convert it into strategy, performance, and measurable outcomes.
-            </p>
-          </div>
-          <div className="data-approach-grid">
+          <h2 style={{fontSize:'clamp(28px,4vw,46px)',letterSpacing:'-0.03em',marginBottom:'16px'}}>
+            Turn Data into a <em style={gradText}>Power Move</em>
+          </h2>
+          <p style={{color:'var(--text-1)',fontSize:'16px',lineHeight:'1.7',maxWidth:'680px',marginBottom:'40px'}}>
+            Data is everywhere. Value isn't. Our end-to-end analytics services help you connect the dots across high-volume, multi-source data and convert it into strategy, performance, and measurable outcomes.
+          </p>
+          <ul className="coe-bullet-list">
             {cards.map((card, i) => (
-              <article key={card.title} className={`cyber-approach-card reveal reveal-delay-${i+1}`}>
-                <div className="cyber-approach-card__num">0{i+1}</div>
+              <li key={card.title} className={`coe-bullet-item reveal reveal-delay-${i+1}`}>
+                <span className="coe-bullet-item__dot" />
                 <div>
-                  <h3>{card.title}</h3>
-                  <p>{card.desc}</p>
+                  <span className="coe-bullet-item__title">{card.title}</span>
+                  <span className="coe-bullet-item__desc">{card.desc}</span>
                 </div>
-              </article>
+              </li>
             ))}
-          </div>
-          <Link href="/contact" className="btn btn--ghost">
+          </ul>
+          <Link href="/contact" className="btn btn--ghost" style={{marginTop:'32px',display:'inline-flex'}}>
             Empower Decisions With Intelligence
             <svg className="arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
           </Link>
@@ -111,12 +117,13 @@ export default function CoeDataPage() {
           </div>
         }
         tag="Case Study · Data Analytics"
-        cardTitle={<>80% Reduction in Manual Reporting<br />&amp; Scalability Delivered</>}
+        cardTitle={<>80% Reduction in Manual Reporting &amp; Scalability Delivered</>}
         cardDesc="How StradIT modernised a global investment bank's data infrastructure 360° — delivering a cloud-native data lake, real-time ingestion, unified data models, and self-service BI across 300+ applications."
         stats={[['80%','Less Manual Reporting'],['Real-Time','Risk Visibility'],['360°','Transformation']]}
         href="/case-studies/data-analytics"
       />
 
+      </main>
       <Footer />
     </>
   )

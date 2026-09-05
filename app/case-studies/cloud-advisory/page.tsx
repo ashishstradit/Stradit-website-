@@ -2,12 +2,10 @@ import Link from 'next/link'
 import Nav from '@/components/Nav'
 import Footer from '@/components/Footer'
 import AnimCanvas from '@/components/AnimCanvas'
+import { constructMetadata, PAGE_SEO } from '@/app/seo'
+import JsonLd, { getCaseStudySchema } from '@/components/JsonLd'
 
-export const metadata = {
-  title: '30% Less Operations Cost with Cloud Advisory — StradIT Case Study',
-  description:
-    'How StradIT helped a US-based financial institution move from a fragmented legacy data-centre landscape to a cloud-ready, cost-optimised portfolio without compromising regulatory, security, or data-residency requirements.',
-}
+export const metadata = constructMetadata(PAGE_SEO.csCloudAdvisory)
 
 const challenges = [
   'Fragmented application portfolios across mainframe, mid-tier, and distributed systems',
@@ -28,7 +26,7 @@ const whyPoints = [
   '5+ years of dedicated cloud advisory experience',
   '30+ cloud & infrastructure specialists',
   '7+ data centres successfully managed',
-  '5,000+ cloud instances delivered for regulated industries',
+  '100% automated infrastructure provisioning',
   'Assessment-to-execution without relying on one-off scripts',
 ]
 
@@ -63,7 +61,13 @@ const steps = [
 export default function CloudAdvisoryCaseStudyPage() {
   return (
     <>
+      <JsonLd schema={getCaseStudySchema({
+        title: 'Cloud Modernisation & Expert Cloud Advisory',
+        description: 'How StradIT helped a US-based financial institution move from a fragmented legacy data-centre landscape to a cloud-ready, optimised portfolio without compromising regulatory, security, or data-residency requirements.',
+        url: 'https://stradit.com/case-studies/cloud-advisory'
+      })} />
       <Nav activePage="coe" />
+      <main id="main-content">
 
       {/* ── HERO ── */}
       <header className="hero hero--compact">
@@ -71,15 +75,14 @@ export default function CloudAdvisoryCaseStudyPage() {
         <div className="container hero__inner">
           <div className="hero__eyebrow eyebrow">Case Study · Cloud &amp; Infrastructure</div>
           <h1 className="hero__title">
-            30% Less Operations Cost<br />
-            with <em>Expert Cloud Advisory</em>
+            Enterprise Cloud Modernisation with <em>Expert Cloud Advisory</em>
           </h1>
           <p className="hero__sub">
             From fragmented legacy to cloud-ready — without compromising compliance.
           </p>
           <p style={{color:'var(--text-1)',fontSize:'16px',lineHeight:'1.65',maxWidth:'600px',marginBottom:'36px'}}>
             Learn how StradIT helped a US-based financial institution move from a fragmented
-            legacy data-centre landscape to a cloud-ready, cost-optimised portfolio —
+            legacy data-centre landscape to a cloud-ready, optimised portfolio —
             without compromising regulatory, security, or data-residency requirements.
           </p>
           <div className="hero__cta">
@@ -90,17 +93,17 @@ export default function CloudAdvisoryCaseStudyPage() {
             <Link href="/coe/cloud" className="btn btn--ghost">Back to Cloud CoE</Link>
           </div>
           <div className="hero__meta">
-            <div className="hero__meta-cell"><div className="hero__meta-v">30%</div><div className="hero__meta-k">Less Ops Cost</div></div>
-            <div className="hero__meta-cell"><div className="hero__meta-v">70%</div><div className="hero__meta-k">Less Licence Cost</div></div>
+            <div className="hero__meta-cell"><div className="hero__meta-v">Unified</div><div className="hero__meta-k">Observability</div></div>
+            <div className="hero__meta-cell"><div className="hero__meta-v">Multi-Cloud</div><div className="hero__meta-k">Ready</div></div>
             <div className="hero__meta-cell"><div className="hero__meta-v">50%</div><div className="hero__meta-k">Faster Deployment</div></div>
-            <div className="hero__meta-cell"><div className="hero__meta-v">5,000+</div><div className="hero__meta-k">Cloud Instances</div></div>
+            <div className="hero__meta-cell"><div className="hero__meta-v">100%</div><div className="hero__meta-k">IaC Automation</div></div>
           </div>
         </div>
         <div className="hero__hud">
           <span className="pulse">Cloud · Operational</span>
           <span className="hero__hud-grid">
-            <span>OPS COST <b>−30%</b></span>
-            <span>LICENCES <b>−70%</b></span>
+            <span>PROVISION <b>IaC 100%</b></span>
+            <span>STRATEGY <b>Multi-Cloud</b></span>
             <span>DEPLOY <b>50% faster</b></span>
           </span>
           <span>Case Study · Cloud</span>
@@ -111,68 +114,33 @@ export default function CloudAdvisoryCaseStudyPage() {
       <section className="section" style={{paddingTop:'100px'}}>
         <div className="container">
           <div className="section-eyebrow"><span className="idx">01</span><span>Client Overview</span></div>
-          <div className="section-intro">
-            <h2 style={{fontSize:'clamp(28px,4vw,46px)',letterSpacing:'-0.03em'}}>
-              A Regulated Institution with a{' '}
-              <em style={{fontStyle:'normal',background:'linear-gradient(120deg,var(--accent),var(--accent-2))',WebkitBackgroundClip:'text',backgroundClip:'text',color:'transparent'}}>Legacy Problem</em>
-            </h2>
-            <p style={{color:'var(--text-1)',fontSize:'16px',lineHeight:'1.7'}}>
-              A leading US-based financial institution operating under strict regulatory, audit,
-              and data-residency requirements — with a heterogeneous landscape of mainframe,
-              mid-tier, and distributed systems. A simple lift-and-shift approach would have
-              only moved costs, not optimised them. A structured, evidence-based cloud advisory
-              approach was required.
-            </p>
-          </div>
-
           {/* Challenges */}
-          <div style={{
-            display:'grid',
-            gridTemplateColumns:'1fr 1fr',
-            gap:'1px',
-            background:'var(--line)',
-            border:'1px solid var(--line)',
-            borderRadius:'var(--radius-lg)',
-            overflow:'hidden',
-            marginBottom:'40px',
-          }}>
-            {challenges.map((c, i) => (
-              <div key={i} style={{
-                background:'var(--ink-1)',
-                padding:'32px 28px',
-                display:'flex',
-                gap:'16px',
-                alignItems:'flex-start',
-              }}>
-                <span style={{
-                  fontFamily:'var(--font-mono)',
-                  fontSize:'10px',
-                  letterSpacing:'0.16em',
-                  color:'var(--accent)',
-                  flexShrink:0,
-                  marginTop:'3px',
-                }}>
-                  {String(i+1).padStart(2,'0')}
-                </span>
-                <p style={{color:'var(--text-1)',fontSize:'14px',lineHeight:'1.65'}}>{c}</p>
-              </div>
-            ))}
-          </div>
+          <details className="cs-offerings-toggle" style={{marginBottom:'40px'}}>
+            <summary style={{display:'block',cursor:'pointer',listStyle:'none',textAlign:'center'}}>
+              <h2 style={{fontSize:'clamp(28px,4vw,46px)',letterSpacing:'-0.03em',marginBottom:'16px'}}>A Regulated Institution with a <em style={{fontStyle:'normal',background:'linear-gradient(120deg,var(--accent),var(--accent-2))',WebkitBackgroundClip:'text',backgroundClip:'text',color:'transparent'}}>Legacy Problem</em></h2>
+              <p style={{color:'var(--text-1)',fontSize:'17px',lineHeight:'1.7',maxWidth:'720px',marginBottom:'24px',textAlign:'left',margin:'0 auto 24px'}}>
+                A leading US-based financial institution operating under strict regulatory, audit,
+                and data-residency requirements — with a heterogeneous landscape of mainframe,
+                mid-tier, and distributed systems. A simple lift-and-shift approach would have
+                only moved workloads, not optimised them. A structured, evidence-based cloud advisory
+                approach was required.
+              </p>
+              <span style={{display:'inline-flex',alignItems:'center',gap:'10px',padding:'11px 26px',borderRadius:'999px',border:'1px solid rgba(255,122,61,0.82)',background:'linear-gradient(135deg,var(--accent),var(--accent-2))',color:'#0b0f18',fontFamily:'var(--font-mono)',fontSize:'11px',fontWeight:700,letterSpacing:'0.10em',textTransform:'uppercase',boxShadow:'0 10px 24px rgba(255,122,61,0.22)'}}>
+                <span className="cs-offerings-label-more">See More</span>
+                <span className="cs-offerings-label-less" style={{display:'none'}}>See Less</span>
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" className="cs-offerings-chevron"><path d="M6 9l6 6 6-6"/></svg>
+              </span>
+            </summary>
+            <div className="cs-g2">
+              {challenges.map((c, i) => (
+                <div key={i} className="cs-bullet-item" style={{background:'var(--ink-1)'}}>
+                  <span className="cs-bullet-dot"/>
+                  <p className="cs-bullet-text">{c}</p>
+                </div>
+              ))}
+            </div>
+          </details>
 
-          <p style={{
-            color:'var(--text-2)',
-            fontSize:'14px',
-            lineHeight:'1.7',
-            maxWidth:'760px',
-            padding:'24px',
-            borderLeft:'3px solid var(--accent)',
-            background:'var(--accent-soft)',
-            borderRadius:'0 var(--radius) var(--radius) 0',
-          }}>
-            The absence of a common framework to assess cloud readiness resulted in higher
-            operational costs and eroding margins. A structured, evidence-based cloud advisory
-            approach was required — not guesswork.
-          </p>
         </div>
       </section>
 
@@ -182,15 +150,12 @@ export default function CloudAdvisoryCaseStudyPage() {
           <div className="section-eyebrow"><span className="idx">02</span><span>Our Proven Scale &amp; Experience</span></div>
           <div className="two-col">
             <div>
-              <h2 style={{fontSize:'clamp(28px,4vw,46px)',letterSpacing:'-0.03em',marginBottom:'20px'}}>
-                A Mature, Execution-Focused{' '}
-                <em style={{fontStyle:'normal',background:'linear-gradient(120deg,var(--accent),var(--accent-2))',WebkitBackgroundClip:'text',backgroundClip:'text',color:'transparent'}}>Cloud Practice</em>
-              </h2>
+              <h2 style={{fontSize:'clamp(28px,4vw,46px)',letterSpacing:'-0.03em',marginBottom:'20px'}}>A Mature, Execution-Focused <em style={{fontStyle:'normal',background:'linear-gradient(120deg,var(--accent),var(--accent-2))',WebkitBackgroundClip:'text',backgroundClip:'text',color:'transparent'}}>Cloud Practice</em></h2>
               <p style={{color:'var(--text-1)',fontSize:'16px',lineHeight:'1.7',marginBottom:'16px'}}>
                 StradIT brings a mature, execution-focused cloud practice to every engagement.
                 With 5+ years of dedicated cloud advisory experience and a core group of 30+
                 cloud and infrastructure specialists, our Cloud &amp; Infrastructure CoE has
-                successfully managed 7+ data centres and 5,000+ cloud instances for clients
+                successfully managed 7+ data centres and automated production deployments for clients
                 across regulated industries.
               </p>
               <p style={{color:'var(--text-2)',fontSize:'14px',lineHeight:'1.7',marginBottom:'28px'}}>
@@ -204,22 +169,8 @@ export default function CloudAdvisoryCaseStudyPage() {
             </div>
             <div style={{display:'flex',flexDirection:'column',gap:'1px',background:'var(--line)',border:'1px solid var(--line)',borderRadius:'var(--radius-lg)',overflow:'hidden'}}>
               {whyPoints.map((pt, i) => (
-                <div key={i} style={{
-                  background:'var(--ink-2)',
-                  padding:'24px',
-                  display:'flex',
-                  gap:'16px',
-                  alignItems:'center',
-                }}>
-                  <span style={{
-                    width:'32px',height:'32px',
-                    borderRadius:'50%',
-                    border:'1px solid var(--accent)',
-                    display:'flex',alignItems:'center',justifyContent:'center',
-                    color:'var(--accent)',
-                    fontSize:'12px',
-                    flexShrink:0,
-                  }}>✓</span>
+                <div key={i} style={{background:'var(--ink-2)',padding:'20px 24px',display:'flex',gap:'16px',alignItems:'center'}}>
+                  <span style={{width:'28px',height:'28px',borderRadius:'50%',border:'1px solid var(--accent)',display:'flex',alignItems:'center',justifyContent:'center',color:'var(--accent)',fontSize:'12px',flexShrink:0}}>✓</span>
                   <span style={{color:'var(--text-0)',fontSize:'14px',lineHeight:'1.5'}}>{pt}</span>
                 </div>
               ))}
@@ -229,51 +180,33 @@ export default function CloudAdvisoryCaseStudyPage() {
       </section>
 
       {/* ── 03 SCOPE ── */}
-      <section className="section">
+      <section className="section" style={{background:'var(--ink-0)',borderTop:'1px solid var(--line)'}}>
         <div className="container">
           <div className="section-eyebrow"><span className="idx">03</span><span>Scope of Cloud Advisory</span></div>
-          <div className="section-intro">
-            <h2 style={{fontSize:'clamp(28px,4vw,46px)',letterSpacing:'-0.03em'}}>
-              A Fully-Optimised{' '}
-              <em style={{fontStyle:'normal',background:'linear-gradient(120deg,var(--accent),var(--accent-2))',WebkitBackgroundClip:'text',backgroundClip:'text',color:'transparent'}}>Cloud Advisory</em>
-            </h2>
-            <p style={{color:'var(--text-1)',fontSize:'16px',lineHeight:'1.7'}}>
+          <div style={{marginBottom:'40px',textAlign:'center'}}>
+            <h2 style={{fontSize:'clamp(28px,4vw,46px)',letterSpacing:'-0.03em',marginBottom:'20px'}}>A Fully-Optimised <em style={{fontStyle:'normal',background:'linear-gradient(120deg,var(--accent),var(--accent-2))',WebkitBackgroundClip:'text',backgroundClip:'text',color:'transparent'}}>Cloud Advisory</em></h2>
+            <p style={{color:'var(--text-1)',fontSize:'17px',lineHeight:'1.7',maxWidth:'720px',textAlign:'left',margin:'0 auto'}}>
               When the client reached StradIT for Cloud Advisory Services, we played at the
               front foot — delivering a comprehensive advisory that covered every dimension
               of their cloud readiness.
             </p>
           </div>
 
-          <div style={{
-            display:'grid',
-            gridTemplateColumns:'repeat(3,1fr)',
-            gap:'1px',
-            background:'var(--line)',
-            border:'1px solid var(--line)',
-            borderRadius:'var(--radius-lg)',
-            overflow:'hidden',
-            marginBottom:'40px',
-          }}>
-            {scope.map((s, i) => (
-              <div key={i} style={{
-                background:'var(--ink-1)',
-                padding:'28px 24px',
-                display:'flex',
-                gap:'14px',
-                alignItems:'flex-start',
-              }}>
-                <span style={{
-                  fontFamily:'var(--font-mono)',
-                  fontSize:'10px',
-                  letterSpacing:'0.16em',
-                  color:'var(--accent)',
-                  flexShrink:0,
-                  marginTop:'2px',
-                }}>{String(i+1).padStart(2,'0')}</span>
-                <span style={{color:'var(--text-1)',fontSize:'14px',lineHeight:'1.6'}}>{s}</span>
-              </div>
-            ))}
-          </div>
+          <details className="cs-offerings-toggle" style={{marginBottom:'40px',textAlign:'center'}}>
+            <summary style={{display:'inline-flex',alignItems:'center',gap:'10px',padding:'11px 26px',borderRadius:'999px',border:'1px solid rgba(255,122,61,0.82)',background:'linear-gradient(135deg,var(--accent),var(--accent-2))',color:'#0b0f18',fontFamily:'var(--font-mono)',fontSize:'11px',fontWeight:700,letterSpacing:'0.10em',textTransform:'uppercase',cursor:'pointer',listStyle:'none',boxShadow:'0 10px 24px rgba(255,122,61,0.22)'}}>
+              <span className="cs-offerings-label-more">See More</span>
+              <span className="cs-offerings-label-less" style={{display:'none'}}>See Less</span>
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" className="cs-offerings-chevron"><path d="M6 9l6 6 6-6"/></svg>
+            </summary>
+            <div className="cs-g2">
+              {scope.map((s, i) => (
+                <div key={i} className="cs-bullet-item" style={{background:'var(--ink-1)'}}>
+                  <span className="cs-bullet-dot"/>
+                  <p className="cs-bullet-text">{s}</p>
+                </div>
+              ))}
+            </div>
+          </details>
         </div>
       </section>
 
@@ -281,103 +214,44 @@ export default function CloudAdvisoryCaseStudyPage() {
       <section className="section" style={{background:'var(--ink-1)',borderTop:'1px solid var(--line)'}}>
         <div className="container">
           <div className="section-eyebrow"><span className="idx">04</span><span>Solutions Offered</span></div>
-          <div className="section-intro">
-            <h2 style={{fontSize:'clamp(28px,4vw,46px)',letterSpacing:'-0.03em'}}>
-              A Multi-Step{' '}
-              <em style={{fontStyle:'normal',background:'linear-gradient(120deg,var(--accent),var(--accent-2))',WebkitBackgroundClip:'text',backgroundClip:'text',color:'transparent'}}>Cloud Strategy</em>
-            </h2>
-            <p style={{color:'var(--text-1)',fontSize:'16px',lineHeight:'1.7'}}>
+          <div style={{marginBottom:'40px',textAlign:'center'}}>
+            <h2 style={{fontSize:'clamp(28px,4vw,46px)',letterSpacing:'-0.03em',marginBottom:'20px'}}>A Multi-Step <em style={{fontStyle:'normal',background:'linear-gradient(120deg,var(--accent),var(--accent-2))',WebkitBackgroundClip:'text',backgroundClip:'text',color:'transparent'}}>Cloud Strategy</em></h2>
+            <p style={{color:'var(--text-1)',fontSize:'17px',lineHeight:'1.7',maxWidth:'720px',textAlign:'left',margin:'0 auto'}}>
               Hands-on mastery over cloud &amp; infrastructure. We brought structure to
               every decision — from catalogue to governance — so nothing was left to chance.
             </p>
           </div>
 
-          <div style={{display:'flex',flexDirection:'column',gap:'1px',background:'var(--line)',border:'1px solid var(--line)',borderRadius:'var(--radius-lg)',overflow:'hidden',marginBottom:'40px'}}>
-            {steps.map((step) => (
-              <div key={step.num} style={{
-                background:'var(--ink-2)',
-                padding:'36px 40px',
-                display:'grid',
-                gridTemplateColumns:'80px 1fr',
-                gap:'32px',
-                alignItems:'start',
-              }}>
-                <div>
-                  <div style={{
-                    fontFamily:'var(--font-mono)',
-                    fontSize:'10px',
-                    letterSpacing:'0.16em',
-                    color:'var(--text-3)',
-                    marginBottom:'4px',
-                    textTransform:'uppercase',
-                  }}>Step</div>
-                  <div style={{
-                    fontFamily:'var(--font-display)',
-                    fontSize:'42px',
-                    fontWeight:600,
-                    letterSpacing:'-0.04em',
-                    lineHeight:1,
-                    background:'linear-gradient(135deg,var(--accent),var(--accent-2))',
-                    WebkitBackgroundClip:'text',
-                    backgroundClip:'text',
-                    color:'transparent',
-                  }}>{step.num}</div>
+          <details className="cs-offerings-toggle" style={{marginBottom:'40px'}}>
+            <summary style={{display:'flex',justifyContent:'center',alignItems:'center',gap:'14px',flexWrap:'wrap',listStyle:'none'}}>
+              <span style={{display:'inline-flex',alignItems:'center',gap:'10px',padding:'11px 26px',borderRadius:'999px',border:'1px solid rgba(255,122,61,0.82)',background:'linear-gradient(135deg,var(--accent),var(--accent-2))',color:'#0b0f18',fontFamily:'var(--font-mono)',fontSize:'11px',fontWeight:700,letterSpacing:'0.10em',textTransform:'uppercase',cursor:'pointer',boxShadow:'0 10px 24px rgba(255,122,61,0.22)'}}>
+                <span className="cs-offerings-label-more">See More</span>
+                <span className="cs-offerings-label-less" style={{display:'none'}}>See Less</span>
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" className="cs-offerings-chevron"><path d="M6 9l6 6 6-6"/></svg>
+              </span>
+              <a href="/coe/cloud" className="btn btn--ghost">
+                Explore our Cloud CoE
+                <svg className="arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+              </a>
+            </summary>
+            <div className="cs-step-list">
+              {steps.map((step) => (
+                <div key={step.num} className="cs-step-row" style={{background:'var(--ink-2)'}}>
+                  <span className="cs-step-dot"/>
+                  <div>
+                    <div className="cs-step-title">{step.title}</div>
+                    <p className="cs-step-body">{step.body}</p>
+                  </div>
                 </div>
-                <div>
-                  <div style={{
-                    fontFamily:'var(--font-display)',
-                    fontSize:'19px',
-                    fontWeight:500,
-                    letterSpacing:'-0.02em',
-                    marginBottom:'10px',
-                    color:'var(--text-0)',
-                  }}>{step.title}</div>
-                  <p style={{color:'var(--text-2)',fontSize:'14px',lineHeight:'1.7'}}>{step.body}</p>
-                </div>
-              </div>
-            ))}
-          </div>
-
-          <Link href="/contact" className="btn btn--ghost">
-            Explore our Cloud CoE
-            <svg className="arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
-          </Link>
+              ))}
+            </div>
+          </details>
         </div>
       </section>
 
-      {/* ── 05 OUTCOMES ── */}
-      <section className="section">
-        <div className="container">
-          <div className="section-eyebrow"><span className="idx">05</span><span>Outcomes &amp; Benefits Delivered</span></div>
-          <h2 style={{fontSize:'clamp(28px,4vw,46px)',letterSpacing:'-0.03em',marginBottom:'16px'}}>
-            Tangible Benefits From{' '}
-            <em style={{fontStyle:'normal',background:'linear-gradient(120deg,var(--accent),var(--accent-2))',WebkitBackgroundClip:'text',backgroundClip:'text',color:'transparent'}}>Day One</em>
-          </h2>
-          <p style={{color:'var(--text-1)',fontSize:'16px',lineHeight:'1.7',maxWidth:'680px',marginBottom:'48px'}}>
-            Within the first phases of execution, the client realised tangible benefits driven
-            directly by the advisory outputs — with peace of mind and a clear, executable roadmap
-            built in from the start.
-          </p>
-
-          {/* Callout */}
-          <p style={{
-            color:'var(--text-1)',
-            fontSize:'15px',
-            lineHeight:'1.7',
-            maxWidth:'760px',
-            padding:'28px 32px',
-            borderLeft:'3px solid var(--accent)',
-            background:'var(--accent-soft)',
-            borderRadius:'0 var(--radius) var(--radius) 0',
-          }}>
-            Peace of mind and hassle-free migration, backed by a clear, executable roadmap
-            and an agreed operating model, come built in with every StradIT engagement.
-          </p>
-        </div>
-      </section>
 
       {/* ── CTA ── */}
-      <section className="section" style={{background:'var(--ink-1)',borderTop:'1px solid var(--line)'}}>
+      <section className="section" style={{background:'var(--ink-0)',borderTop:'1px solid var(--line)'}}>
         <div className="container" style={{textAlign:'center',maxWidth:'680px',margin:'0 auto'}}>
           <div style={{
             fontFamily:'var(--font-mono)',
@@ -387,20 +261,10 @@ export default function CloudAdvisoryCaseStudyPage() {
             color:'var(--accent)',
             marginBottom:'20px',
           }}>Finding It Hard to Navigate Complex Cloud Decisions?</div>
-          <h2 style={{
-            fontSize:'clamp(28px,4vw,46px)',
-            letterSpacing:'-0.03em',
-            marginBottom:'20px',
-            lineHeight:1.1,
-          }}>
-            Get a Structured Plan Your Teams Can{' '}
-            <em style={{fontStyle:'normal',background:'linear-gradient(120deg,var(--accent),var(--accent-2))',WebkitBackgroundClip:'text',backgroundClip:'text',color:'transparent'}}>
-              Execute With Confidence
-            </em>
-          </h2>
+          <h2 style={{fontSize:'clamp(28px,4vw,46px)',letterSpacing:'-0.03em',marginBottom:'20px',lineHeight:1.1}}>Get a Structured Plan Your Teams Can <em style={{fontStyle:'normal',background:'linear-gradient(120deg,var(--accent),var(--accent-2))',WebkitBackgroundClip:'text',backgroundClip:'text',color:'transparent'}}>Execute With Confidence</em></h2>
           <p style={{color:'var(--text-1)',fontSize:'16px',lineHeight:'1.7',marginBottom:'36px'}}>
             Talk to StradIT&apos;s Cloud Advisory team today. We turn cloud complexity into
-            a clear, costed, compliance-ready roadmap.
+            a clear, compliance-ready roadmap.
           </p>
           <div style={{display:'flex',gap:'16px',justifyContent:'center',flexWrap:'wrap'}}>
             <Link href="/contact" className="btn btn--primary">
@@ -414,6 +278,7 @@ export default function CloudAdvisoryCaseStudyPage() {
         </div>
       </section>
 
+      </main>
       <Footer />
     </>
   )

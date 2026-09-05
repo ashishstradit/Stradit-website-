@@ -5,8 +5,9 @@ import { useState } from 'react'
 import Nav from '@/components/Nav'
 import Footer from '@/components/Footer'
 import AnimCanvas from '@/components/AnimCanvas'
+import JsonLd, { getServiceSchema } from '@/components/JsonLd'
 
-type Theme = 'home' | 'about' | 'coe' | 'ai' | 'data' | 'cyber' | 'cloud' | 'testing' | 'gcc' | 'startit' | 'contact'
+type Theme = 'home' | 'about' | 'coe' | 'ai' | 'data' | 'cyber' | 'cloud' | 'testing' | 'gcc' | 'startit' | 'contact' | 'digitalassets'
 
 const practices: { id: string; label: string; href: string; desc: string; theme: Theme }[] = [
   {
@@ -18,21 +19,21 @@ const practices: { id: string; label: string; href: string; desc: string; theme:
   },
   {
     id: 'data',
-    label: 'Data Analytics — Applied AI',
+    label: 'Data Analytics Applied AI',
     href: '/coe/data',
     desc: 'Turn fragmented data into trusted insights; built for speed, accuracy, and action.',
     theme: 'data',
   },
   {
     id: 'cyber',
-    label: 'Cyber Security — Applied AI',
+    label: 'Cyber Security Applied AI',
     href: '/coe/cyber',
     desc: 'Guard digital assets across applications, data, and identities while downsizing risks with AI-driven threat intelligence.',
     theme: 'cyber',
   },
   {
     id: 'cloud',
-    label: 'Cloud & Infrastructure — Applied AI',
+    label: 'Cloud & Infrastructure Applied AI',
     href: '/coe/cloud',
     desc: 'End-to-end consulting and service delivery to support cloud migration and modernization.',
     theme: 'cloud',
@@ -43,6 +44,13 @@ const practices: { id: string; label: string; href: string; desc: string; theme:
     href: '/coe/testing',
     desc: 'Supply scalable, reusable AI-powered QA frameworks to meet the highest quality standards.',
     theme: 'testing',
+  },
+  {
+    id: 'digitalassets',
+    label: 'Digital Assets & Blockchain',
+    href: '/coe/digital-assets',
+    desc: 'Blockchain-native infrastructure for regulated on-chain capital markets — from token issuance to smart contract automation.',
+    theme: 'digitalassets',
   },
 ]
 
@@ -56,8 +64,6 @@ const gains = [
 
 export default function CoePage() {
   const [active, setActive] = useState(0)
-  // Track a mount-key per panel. Incrementing it forces AnimCanvas to remount
-  // AFTER the panel is already visible, so getBoundingClientRect() returns real px.
   const [mountKeys, setMountKeys] = useState<Record<number, number>>({ 0: 1 })
 
   function switchTab(i: number) {
@@ -67,7 +73,13 @@ export default function CoePage() {
 
   return (
     <>
+      <JsonLd schema={getServiceSchema({
+        name: 'Centers of Excellence (CoE)',
+        description: 'Specialized practices in Applied AI, data analytics, cloud infrastructure, quality engineering, cybersecurity, and digital assets.',
+        url: 'https://stradit.com/coe'
+      })} />
       <Nav activePage="coe" />
+      <main id="main-content">
 
       {/* HERO */}
       <header className="hero hero--compact" style={{isolation:'isolate'}}>
@@ -108,9 +120,11 @@ export default function CoePage() {
                 key={p.id}
                 onClick={() => switchTab(i)}
                 style={{
-                  background: active === i ? 'var(--accent)' : 'var(--ink-1)',
-                  color: active === i ? '#000' : 'var(--text-2)',
-                  fontWeight: active === i ? 600 : 400,
+                  background: active === i ? 'linear-gradient(135deg, var(--accent), var(--accent-2))' : 'var(--ink-1)',
+                  color: active === i ? '#1a0d05' : 'var(--text-2)',
+                  borderColor: active === i ? 'rgba(255,122,61,0.82)' : 'transparent',
+                  fontWeight: active === i ? 700 : 600,
+                  boxShadow: active === i ? '0 10px 24px rgba(255,122,61,0.2)' : 'none',
                 }}
               >
                 {p.label}
@@ -118,10 +132,7 @@ export default function CoePage() {
             ))}
           </div>
 
-          {/* Panels: inactive panels are hidden with display:none so they don't
-              consume layout. AnimCanvas only mounts when the panel is FIRST
-              shown (lazy via mountKeys), ensuring getBoundingClientRect() always
-              returns real pixel dimensions and the animation initialises correctly. */}
+          {/* Panels — animation visual + CTA only (no repeated text/description) */}
           {practices.map((p, i) => (
             <div
               key={p.id}
@@ -129,31 +140,12 @@ export default function CoePage() {
               style={{ display: active === i ? 'grid' : 'none' }}
             >
               <div className="coe-slider-content">
-                <div style={{fontFamily:'var(--font-mono)',fontSize:'10px',letterSpacing:'0.16em',color:'var(--accent)',marginBottom:'12px'}}>0{i+1}</div>
-                <h3 style={{fontFamily:'var(--font-display)',fontSize:'clamp(22px,3vw,32px)',fontWeight:500,letterSpacing:'-0.02em',marginBottom:'16px'}}>{p.label}</h3>
-                <p style={{color:'var(--text-1)',fontSize:'16px',lineHeight:'1.7',marginBottom:'32px'}}>{p.desc}</p>
-                <div style={{display:'flex',gap:'16px',alignItems:'center',flexWrap:'wrap'}}>
-                  <Link href={p.href} className="btn btn--primary">
-                    Know More
-                    <svg className="arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
-                  </Link>
-                  <div style={{display:'flex',gap:'8px'}}>
-                    {practices.map((_,j) => (
-                      <button
-                        key={j}
-                        onClick={() => switchTab(j)}
-                        style={{
-                          width:'8px',height:'8px',borderRadius:'50%',border:'none',cursor:'pointer',
-                          background: active === j ? 'var(--accent)' : 'var(--line)',
-                          transition:'background 0.2s',
-                        }}
-                      />
-                    ))}
-                  </div>
-                </div>
+                <Link href={p.href} className="btn btn--primary">
+                  Know More
+                  <svg className="arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+                </Link>
               </div>
               <div className="coe-slider-canvas">
-                {/* Mount only after panel first activated; key forces fresh init */}
                 {mountKeys[i] && (
                   <AnimCanvas
                     theme={p.theme}
@@ -195,7 +187,7 @@ export default function CoePage() {
                   border:'1px solid var(--line)',
                   borderRadius: i === 0 ? 'var(--radius-lg) var(--radius-lg) 0 0' : i === gains.length-1 ? '0 0 var(--radius-lg) var(--radius-lg)' : '0',
                 }}>
-                  <span style={{color:'var(--accent)',fontFamily:'var(--font-mono)',fontSize:'11px',minWidth:'24px'}}>0{i+1}</span>
+                  <span style={{width:'8px',height:'8px',borderRadius:'50%',background:'linear-gradient(135deg,var(--accent),var(--accent-2))',flexShrink:0,display:'inline-block'}}></span>
                   <span style={{fontFamily:'var(--font-display)',fontSize:'16px',fontWeight:500,letterSpacing:'-0.01em'}}>{g}</span>
                 </div>
               ))}
@@ -204,6 +196,7 @@ export default function CoePage() {
         </div>
       </section>
 
+      </main>
       <Footer />
     </>
   )

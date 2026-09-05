@@ -47,10 +47,22 @@ const slides = [
 ]
 
 const INTERVAL = 5000
+const IMAGE_WIDTHS = [480, 768, 1024, 1440, 1920]
+
+function imageUrl(src: string, width: number) {
+  return src
+    .replace(/([?&])w=\d+/, `$1w=${width}`)
+    .replace(/([?&])q=\d+/, '$1q=50')
+}
+
+function imageSrcSet(src: string) {
+  return IMAGE_WIDTHS.map((width) => `${imageUrl(src, width)} ${width}w`).join(', ')
+}
 
 export default function HeroCarousel() {
   const [active, setActive] = useState(0)
   const [progress, setProgress] = useState(0)
+  const [loadedIndices, setLoadedIndices] = useState<number[]>([0])
   const timerRef = useRef<ReturnType<typeof setInterval> | null>(null)
   const startRef = useRef<number>(Date.now())
 
@@ -59,6 +71,13 @@ export default function HeroCarousel() {
     setProgress(0)
     startRef.current = Date.now()
   }
+
+  useEffect(() => {
+    setLoadedIndices((prev) => {
+      if (prev.includes(active)) return prev
+      return [...prev, active]
+    })
+  }, [active])
 
   useEffect(() => {
     const tick = () => {
@@ -77,6 +96,14 @@ export default function HeroCarousel() {
 
   return (
     <>
+      <link
+        rel="preload"
+        as="image"
+        href={imageUrl(slides[0].img, 1024)}
+        imageSrcSet={imageSrcSet(slides[0].img)}
+        imageSizes="100vw"
+        fetchPriority="high"
+      />
       {/* Slides */}
       <div style={{position:'absolute',inset:0,zIndex:0,overflow:'hidden'}}>
         {slides.map((s, i) => (
@@ -86,15 +113,24 @@ export default function HeroCarousel() {
             transition:'opacity 1.4s cubic-bezier(0.4,0,0.2,1)',
             pointerEvents: active === i ? 'auto' : 'none',
           }}>
-            {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img
-              src={s.img}
-              alt={s.alt}
-              loading={i === 0 ? 'eager' : 'lazy'}
-              style={{width:'100%',height:'100%',objectFit:'cover',objectPosition:'center 35%',display:'block',filter:'brightness(0.72) saturate(1.3) contrast(1.06)'}}
-            />
-            {/* colour overlay */}
-            <div style={{position:'absolute',inset:0,background:'linear-gradient(115deg,rgba(255,122,61,0.2) 0%,rgba(255,122,61,0.05) 38%,transparent 62%),linear-gradient(255deg,rgba(76,200,255,0.16) 0%,rgba(76,200,255,0.04) 38%,transparent 62%)'}} />
+            {loadedIndices.includes(i) && (
+              <>
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img
+                  src={imageUrl(s.img, 1920)}
+                  srcSet={imageSrcSet(s.img)}
+                  sizes="100vw"
+                  alt={s.alt}
+                  loading={i === 0 ? 'eager' : 'lazy'}
+                  fetchPriority={i === 0 ? 'high' : 'auto'}
+                  decoding={i === 0 ? 'sync' : 'async'}
+                  draggable={false}
+                  style={{width:'100%',height:'100%',objectFit:'cover',objectPosition:'center 35%',display:'block',filter:'brightness(0.72) saturate(1.3) contrast(1.06)'}}
+                />
+                {/* colour overlay */}
+                <div style={{position:'absolute',inset:0,background:'linear-gradient(115deg,rgba(255,122,61,0.2) 0%,rgba(255,122,61,0.05) 38%,transparent 62%),linear-gradient(255deg,rgba(76,200,255,0.16) 0%,rgba(76,200,255,0.04) 38%,transparent 62%)'}} />
+              </>
+            )}
             {/* caption */}
             <div className="hero-carousel-caption" style={{
               position:'absolute',bottom:'76px',right:'clamp(20px,4vw,56px)',
@@ -116,20 +152,33 @@ export default function HeroCarousel() {
 
       {/* Dot nav */}
       <div className="hero-carousel-dots" style={{position:'absolute',bottom:'88px',left:'50%',transform:'translateX(-50%)',zIndex:5,display:'flex',gap:'8px',alignItems:'center'}}>
-        {slides.map((_, i) => (
+        {slides.map((s, i) => (
           <button
             key={i}
             onClick={() => goTo(i)}
+            aria-label={`Go to slide ${i + 1}: ${s.alt}`}
+            aria-current={active === i ? 'true' : 'false'}
             style={{
-              width: active === i ? '22px' : '6px',
-              height:'6px',
-              borderRadius:'3px',
-              background: active === i ? 'var(--accent)' : 'rgba(255,255,255,0.28)',
-              border:'none',padding:0,cursor:'pointer',
-              transition:'all .35s ease',
-              boxShadow: active === i ? '0 0 10px rgba(255,122,61,0.5)' : 'none',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              width: '24px',
+              height: '24px',
+              background: 'transparent',
+              border: 'none',
+              padding: 0,
+              cursor: 'pointer',
             }}
-          />
+          >
+            <span style={{
+              width: active === i ? '22px' : '6px',
+              height: '6px',
+              borderRadius: '3px',
+              background: active === i ? 'var(--accent)' : 'rgba(255,255,255,0.28)',
+              transition: 'all .35s ease',
+              boxShadow: active === i ? '0 0 10px rgba(255,122,61,0.5)' : 'none',
+            }} />
+          </button>
         ))}
       </div>
 

@@ -15,12 +15,12 @@ const socialLinks = [
   },
   {
     name: 'Stradit Reachout on Facebook',
-    url: 'https://www.facebook.com/StraditReachout',
+    url: 'https://www.facebook.com/people/Stradit-Reachout/pfbid032uUHtYjJCcvY4dc4p5K194jTMZ2ohD2pTbqpRq3TcYCmUfAmijVtNYVQe8sM7jPpl/',
     icon: <path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z" />,
   },
   {
     name: 'Stradit Reachout on Instagram',
-    url: 'https://www.instagram.com/straditreachout',
+    url: 'https://www.instagram.com/stradit23/',
     icon: (
       <>
         <rect x="2" y="2" width="20" height="20" rx="5" ry="5" />
@@ -45,22 +45,23 @@ export default function Footer() {
             <p>Pioneering the next generation of applied artificial intelligence and engineering for global enterprises.</p>
           </div>
           <div className="footer__col reveal reveal-delay-1">
-            <h4>Company</h4>
-            <Link href="/about">About</Link>
+            <div className="footer__title">Company</div>
+            <Link href="/about">About Us</Link>
             <Link href="/startit">StartIT</Link>
             <Link href="/careers">Careers</Link>
           </div>
           <div className="footer__col reveal reveal-delay-2">
-            <h4>Center of Excellence</h4>
+            <div className="footer__title">Center of Excellence</div>
             <Link href="/coe/ai" style={{fontSize:'13px',whiteSpace:'nowrap'}}>Applied Artificial Intelligence</Link>
-            <Link href="/coe/data" style={{fontSize:'13px',whiteSpace:'nowrap'}}>Data Analytics — Applied AI</Link>
-            <Link href="/coe/cyber" style={{fontSize:'13px',whiteSpace:'nowrap'}}>Cyber Security — Applied AI</Link>
-            <Link href="/coe/cloud" style={{fontSize:'13px',whiteSpace:'nowrap'}}>Cloud & Infrastructure — Applied AI</Link>
+            <Link href="/coe/data" style={{fontSize:'13px',whiteSpace:'nowrap'}}>Data Analytics Applied AI</Link>
+            <Link href="/coe/cyber" style={{fontSize:'13px',whiteSpace:'nowrap'}}>Cyber Security Applied AI</Link>
+            <Link href="/coe/cloud" style={{fontSize:'13px',whiteSpace:'nowrap'}}>Cloud &amp; Infrastructure Applied AI</Link>
             <Link href="/coe/testing" style={{fontSize:'13px',whiteSpace:'nowrap'}}>Automated AI Testing</Link>
+            <Link href="/coe/digital-assets" style={{fontSize:'13px',whiteSpace:'nowrap'}}>Digital Assets &amp; Blockchain</Link>
             <Link href="/gcc" style={{fontSize:'13px',whiteSpace:'nowrap'}}>Global Capability Center (GCC)</Link>
           </div>
           <div className="footer__col reveal reveal-delay-3">
-            <h4>Contact</h4>
+            <div className="footer__title">Contact</div>
             <a href="mailto:reachout@stradit.com">reachout@stradit.com</a>
             <Link href="/contact">Book a call</Link>
             <div className="footer__social" aria-label="Social links">
@@ -76,6 +77,7 @@ export default function Footer() {
         </div>
         <div className="footer__bottom">
           <span>© {year} Stradit LLC · All rights reserved</span>
+          <Link href="/sitemap.xml" style={{ color: 'inherit', textDecoration: 'none' }}>Sitemap</Link>
         </div>
       </div>
     </footer>

@@ -48,13 +48,13 @@ export default function Nav({ activePage }: { activePage?: string }) {
               </button>
             </div>
             <div className="nav__submenu">
-              <Link href="/coe/ai" onClick={closeMenu}>Applied Artificial Intelligence<small>LLM workflows · Agents · Governance</small></Link>
-              <Link href="/coe/data" onClick={closeMenu}>Data Analytics — Applied AI<small>Unified data · Decision intelligence</small></Link>
-              <Link href="/coe/cyber" onClick={closeMenu}>Cyber Security — Applied AI<small>Threat intelligence · Compliance</small></Link>
-              <Link href="/coe/cloud" onClick={closeMenu}>Cloud & Infrastructure — Applied AI<small>Migration · Reliability · FinOps</small></Link>
-              <Link href="/coe/testing" onClick={closeMenu}>Automated AI Testing<small>QA automation · Resilience</small></Link>
-              <Link href="/gcc" onClick={closeMenu}>Global Capability Center (GCC)<small>GCC setup · Talent · Delivery governance</small></Link>
-              <Link href="/coe/digital-assets" onClick={closeMenu}>Digital Assets &amp; Blockchain<small>Tokenization · Smart contracts · On-chain settlement</small></Link>
+              <Link href="/coe/ai" onClick={closeMenu}>Applied Artificial Intelligence</Link>
+              <Link href="/coe/data" onClick={closeMenu}>Data Analytics Applied AI</Link>
+              <Link href="/coe/cyber" onClick={closeMenu}>Cyber Security Applied AI</Link>
+              <Link href="/coe/cloud" onClick={closeMenu}>Cloud &amp; Infrastructure Applied AI</Link>
+              <Link href="/coe/testing" onClick={closeMenu}>Automated AI Testing</Link>
+              <Link href="/gcc" onClick={closeMenu}>Global Capability Center (GCC)</Link>
+              <Link href="/coe/digital-assets" onClick={closeMenu}>Digital Assets &amp; Blockchain</Link>
             </div>
           </div>
           <Link href="/gcc" className={activePage === 'gcc' ? 'active' : ''} onClick={closeMenu}>Global Capability Center</Link>
@@ -62,7 +62,7 @@ export default function Nav({ activePage }: { activePage?: string }) {
           <Link href="/careers" className={activePage === 'careers' ? 'active' : ''} onClick={closeMenu}>Careers</Link>
 
           <Link href="/contact" className="nav__mobile-cta" onClick={closeMenu}>
-            Contact StradIT
+            Contact Us
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
           </Link>
         </div>

@@ -4,6 +4,8 @@ import Footer from '@/components/Footer'
 import AnimCanvas from '@/components/AnimCanvas'
 import LandingCarousel from '@/components/LandingCarousel'
 import CoeCard from '@/components/CoeCard'
+import { constructMetadata, PAGE_SEO } from './seo'
+import JsonLd, { getOrganizationSchema, getWebSiteSchema, getSiteNavigationSchema } from '@/components/JsonLd'
 
 const coeCards = [
   {
@@ -53,7 +55,6 @@ const coeCards = [
   },
   {
     href: '/gcc', size: 'md' as const, animDelay: 400,
-    style: { minHeight: '280px' }, visualStyle: { minHeight: '130px' },
     badge: 'Global', chips: ['GCC', 'Enablement'],
     theme: 'gcc' as const, animKey: 'card-gcc',
     title: 'Global Capability Center (GCC)',
@@ -72,30 +73,33 @@ const coeCards = [
   },
 ]
 
-export const metadata = { title: 'StradIT — Applied AI & Engineering for Capital Markets' }
+export const metadata = constructMetadata(PAGE_SEO.home)
 
 export default function HomePage() {
   return (
     <>
+      <JsonLd schema={getOrganizationSchema()} />
+      <JsonLd schema={getWebSiteSchema()} />
+      <JsonLd schema={getSiteNavigationSchema()} />
       <Nav activePage="home" />
+      <main id="main-content">
 
       {/* HERO */}
       <header className="hero hero--carousel">
         <LandingCarousel />
         <div className="container hero__inner">
-          <h1 className="hero__title reveal">
-            <em>Applied AI and Engineering</em><br/>
-            That Delivers <span className="blue">Measurable Change</span>
+          <h1 className="hero__title reveal-immediate">
+            <em>Applied AI and Engineering</em> That Delivers <span className="blue">Measurable Change</span>
           </h1>
-          <p className="hero__sub reveal reveal-delay-1">StradIT helps you turn technology into a lasting edge through applied AI and high-quality engineering delivery.</p>
-          <div className="hero__cta reveal reveal-delay-2">
+          <p className="hero__sub reveal-immediate reveal-delay-1">StradIT helps you turn technology into a lasting edge through applied AI and high-quality engineering delivery.</p>
+          <div className="hero__cta reveal-immediate reveal-delay-2">
             <Link href="/contact" className="btn btn--primary">
               Start Your Digital Transformation
               <svg className="arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
             </Link>
             <Link href="/coe" className="btn btn--ghost">Explore Our Center of Excellence</Link>
           </div>
-          <div className="hero__meta reveal reveal-delay-3">
+          <div className="hero__meta reveal-immediate reveal-delay-3">
             <div className="hero__meta-cell"><div className="hero__meta-k">Engagements</div><div className="hero__meta-v">40+ <small>capital-markets programs</small></div></div>
             <div className="hero__meta-cell"><div className="hero__meta-k">Production AI</div><div className="hero__meta-v">120+ <small>governed workflows shipped</small></div></div>
             <div className="hero__meta-cell"><div className="hero__meta-k">Delivery</div><div className="hero__meta-v">8 wks <small>median time-to-value</small></div></div>
@@ -113,7 +117,7 @@ export default function HomePage() {
           </div>
           <div className="coe-rail">
             {coeCards.map((card, index) => (
-              <CoeCard key={card.href} {...card} revealClass={`reveal reveal-delay-${Math.min(index, 4)}`} />
+              <CoeCard key={card.href} {...card} interactionGroup="landing-coe" revealClass={`reveal reveal-delay-${Math.min(index, 4)}`} />
             ))}
           </div>{/* end coe-rail */}
         </div>{/* end container */}
@@ -126,7 +130,6 @@ export default function HomePage() {
         <div className="container">
           <div className="global-impact-card reveal reveal-zoom">
             <div className="global-impact-copy">
-              <div className="section-eyebrow"><span className="idx">04</span><span>Global Delivery</span></div>
               <h2>
                 Global Scale, <em>Local Impact</em>
               </h2>
@@ -139,7 +142,7 @@ export default function HomePage() {
                 <span>Flawlessly engineered</span>
               </div>
               <Link href="/about" className="btn btn--primary global-impact-cta">
-                Learn More
+                Learn More About StradIT
                 <svg className="arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
               </Link>
             </div>
@@ -162,7 +165,7 @@ export default function HomePage() {
           }} className="cta-band reveal reveal-zoom">
             <div>
               <h2 style={{fontSize:'clamp(28px,4vw,52px)',letterSpacing:'-0.03em',marginBottom:'16px',lineHeight:'1.05'}}>
-                Ready to turn innovation<br/>into execution?
+                Ready to turn innovation into <em style={{fontStyle:'normal',background:'linear-gradient(120deg,var(--accent),var(--accent-2))',WebkitBackgroundClip:'text',backgroundClip:'text',color:'transparent'}}>execution?</em>
               </h2>
               <p style={{color:'var(--text-1)',fontSize:'17px',lineHeight:'1.6',maxWidth:'560px'}}>
                 Tell us what you&apos;re planning to build with AI and tech engineering. We&apos;ll map the fastest path from where you are to production outcomes.
@@ -170,7 +173,7 @@ export default function HomePage() {
             </div>
             <div style={{flexShrink:0}}>
               <Link href="/contact" className="btn btn--primary" style={{fontSize:'16px',padding:'16px 32px'}}>
-                Contact StradIT
+                Contact Us
                 <svg className="arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
               </Link>
             </div>
@@ -178,6 +181,7 @@ export default function HomePage() {
         </div>
       </section>
 
+      </main>
       <Footer />
     </>
   )

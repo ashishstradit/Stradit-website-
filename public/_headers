@@ -1,0 +1,18 @@
+# Cache-Control headers for Cloudflare Pages and static servers
+/_next/static/*
+  Cache-Control: public, max-age=31536000, immutable
+
+/favicon.ico
+  Cache-Control: public, max-age=86400, must-revalidate
+
+/logo.png
+  Cache-Control: public, max-age=604800, must-revalidate
+
+/og-image.png
+  Cache-Control: public, max-age=604800, must-revalidate
+
+/anim-engine.js
+  Cache-Control: public, max-age=604800, must-revalidate
+
+/anim-engine-v2.js
+  Cache-Control: public, max-age=604800, must-revalidate

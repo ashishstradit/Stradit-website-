@@ -32,7 +32,140 @@ export default function CareersPage() {
   const [selectedRole, setSelectedRole] = useState('')
   const [fileName, setFileName] = useState('')
   const [submitted, setSubmitted] = useState(false)
+  const [jobsLoaded, setJobsLoaded] = useState(false)
+  const [workableJobs, setWorkableJobs] = useState<{ title: string; dept: string }[]>([])
   const applyRef = useRef<HTMLElement>(null)
+
+  // Load Workable Embed script
+  useEffect(() => {
+    let script = document.querySelector('script[src="https://www.workable.com/assets/embed.js"]') as HTMLScriptElement;
+
+    const initWorkable = () => {
+      const w = window as any;
+      if (w.whr && w.whr_embed) {
+        w.whr(document).ready(() => {
+          w.whr_embed(734377, {
+            base: "jobs",
+            detail: "titles",
+            zoom: "country",
+            grouping: "none",
+          });
+        });
+      }
+    };
+
+    if (!script) {
+      script = document.createElement("script");
+      script.src = "https://www.workable.com/assets/embed.js";
+      script.async = true;
+      script.onload = initWorkable;
+      document.body.appendChild(script);
+    } else {
+      initWorkable();
+    }
+  }, []);
+
+  // Observe Workable container to extract job lists and set loaded state
+  useEffect(() => {
+    const target = document.getElementById('whr_embed_hook');
+    if (!target) return;
+
+    const observer = new MutationObserver(() => {
+      const items = target.querySelectorAll('.whr-item');
+      if (items.length > 0) {
+        const jobsList: { title: string; dept: string }[] = [];
+        items.forEach(item => {
+          const titleEl = item.querySelector('.whr-title a') || item.querySelector('.whr-title') || item.querySelector('h3 a') || item.querySelector('h3');
+          const title = titleEl ? titleEl.textContent?.trim() || '' : '';
+          const deptEl = item.querySelector('.whr-dept');
+          
+          let dept = deptEl ? deptEl.textContent?.trim() || '' : '';
+          if (dept.toLowerCase().startsWith('department:')) {
+            dept = dept.substring(11).trim();
+          } else {
+            const labelSpan = deptEl?.querySelector('span');
+            if (labelSpan) {
+              dept = deptEl?.textContent?.replace(labelSpan.textContent || '', '').trim() || '';
+            }
+          }
+          if (title) {
+            jobsList.push({ title, dept });
+          }
+        });
+
+        setWorkableJobs(jobsList);
+        setJobsLoaded(true);
+      }
+    });
+
+    observer.observe(target, { childList: true, subtree: true });
+    return () => observer.disconnect();
+  }, []);
+
+  // Filter Workable jobs in the DOM
+  useEffect(() => {
+    const items = document.querySelectorAll('#whr_embed_hook .whr-item');
+    items.forEach(item => {
+      const htmlItem = item as HTMLElement;
+      if (activeFilter === 'All roles') {
+        htmlItem.classList.remove('whr-item-hidden');
+      } else {
+        const titleEl = item.querySelector('.whr-title a') || item.querySelector('.whr-title') || item.querySelector('h3 a') || item.querySelector('h3');
+        const titleText = titleEl ? titleEl.textContent || '' : '';
+        const deptEl = item.querySelector('.whr-dept');
+        let deptText = deptEl ? deptEl.textContent || '' : '';
+        if (deptText.toLowerCase().startsWith('department:')) {
+          deptText = deptText.substring(11).trim();
+        } else {
+          const labelSpan = deptEl?.querySelector('span');
+          if (labelSpan) {
+            deptText = deptEl?.textContent?.replace(labelSpan.textContent || '', '').trim() || '';
+          }
+        }
+
+        const f = activeFilter.toLowerCase();
+        const d = deptText.toLowerCase();
+        const t = titleText.toLowerCase();
+
+        let isMatch = false;
+        if (f === 'applied ai') {
+          isMatch = (
+            d.includes('ai') || d.includes('ml') || d.includes('intelligence') ||
+            t.includes('ai') || t.includes('ml') || t.includes('machine learning') || t.includes('intelligence')
+          );
+        } else if (f === 'data analytics') {
+          isMatch = (
+            d.includes('data') || d.includes('analytics') || d.includes('bi') || d.includes('looker') || d.includes('quicksight') ||
+            t.includes('data') || t.includes('analytics') || t.includes('bi') || t.includes('looker') || t.includes('quicksight')
+          );
+        } else if (f === 'cyber security') {
+          isMatch = (
+            d.includes('cyber') || d.includes('security') || d.includes('secops') || d.includes('mainframe') ||
+            t.includes('cyber') || t.includes('security') || t.includes('secops') || t.includes('mainframe')
+          );
+        } else if (f === 'cloud') {
+          isMatch = (
+            d.includes('cloud') || d.includes('devops') || d.includes('platform') || d.includes('infrastructure') || d.includes('aws') || d.includes('azure') || d.includes('gcp') || d.includes('middleware') ||
+            t.includes('cloud') || t.includes('devops') || t.includes('platform') || t.includes('infrastructure') || t.includes('aws') || t.includes('azure') || t.includes('gcp') || t.includes('middleware')
+          );
+        } else if (f === 'qa engineering') {
+          isMatch = (
+            d.includes('qa') || d.includes('quality') || d.includes('testing') || d.includes('automation') || d.includes('test') ||
+            t.includes('qa') || t.includes('quality') || t.includes('testing') || t.includes('automation') || t.includes('test')
+          );
+        } else if (f === 'strategy') {
+          isMatch = (
+            d.includes('strategy') || d.includes('program') || d.includes('director') || d.includes('lead') || d.includes('manager') || d.includes('consultant') || d.includes('partner') || d.includes('analyst') ||
+            t.includes('strategy') || t.includes('program') || t.includes('director') || t.includes('lead') || t.includes('manager') || t.includes('consultant') || t.includes('partner') || t.includes('analyst')
+          );
+        } else {
+          isMatch = d.includes(f) || f.includes(d) || t.includes(f);
+        }
+
+        htmlItem.classList.toggle('whr-item-hidden', !isMatch);
+      }
+    });
+  }, [activeFilter, workableJobs, jobsLoaded]);
 
   useEffect(() => {
     const io = new IntersectionObserver(
@@ -45,14 +178,7 @@ export default function CareersPage() {
     )
     document.querySelectorAll('.reveal').forEach(el => io.observe(el))
     return () => io.disconnect()
-  }, [activeFilter])
-
-  const filtered = activeFilter === 'All roles' ? JOBS : JOBS.filter(j => j.dept === (FILTER_TO_DEPT[activeFilter] || activeFilter))
-
-  function handleApply(role: string) {
-    setSelectedRole(role)
-    applyRef.current?.scrollIntoView({ behavior: 'smooth' })
-  }
+  }, [activeFilter, jobsLoaded])
 
   function handleSubmit() {
     const fname = (document.getElementById('fname') as HTMLInputElement)?.value.trim()
@@ -72,6 +198,7 @@ export default function CareersPage() {
   return (
     <>
       <Nav activePage="careers" />
+      <main id="main-content">
 
       {/* HERO */}
       <header className="hero careers-hero" style={{ minHeight: '72vh', paddingTop: '80px' }}>
@@ -81,8 +208,7 @@ export default function CareersPage() {
         <div className="container hero__inner">
           <div className="eyebrow" style={{marginBottom:'28px'}}>Careers · Join Stradit</div>
           <h1 className="hero__title" style={{fontSize:'clamp(38px,5.5vw,76px)',letterSpacing:'-0.038em',marginBottom:'24px'}}>
-            Building for the future<br/>of global{' '}
-            <em style={{fontStyle:'normal',background:'linear-gradient(120deg,var(--accent),var(--accent-2),var(--gold))',WebkitBackgroundClip:'text',backgroundClip:'text',color:'transparent'}}>capacity.</em>
+            Building for the future of global <em style={{fontStyle:'normal',background:'linear-gradient(120deg,var(--accent),var(--accent-2),var(--gold))',WebkitBackgroundClip:'text',backgroundClip:'text',color:'transparent'}}>capacity.</em>
           </h1>
           <p style={{fontSize:'clamp(16px,1.4vw,19px)',color:'var(--text-1)',maxWidth:'600px',marginBottom:'36px',lineHeight:'1.55'}}>
             We&apos;re looking for engineers, architects, data scientists, and operators who want to solve real challenges, create meaningful impact, and deliver results that matter at the most demanding regulated institutions on the planet.
@@ -100,7 +226,9 @@ export default function CareersPage() {
             </div>
             <div className="careers-hero-stats__item careers-hero-stats__item--mid">
               <div className="careers-hero-stats__k">Open roles</div>
-              <div className="careers-hero-stats__v">18 <span className="careers-hero-stats__sub">across 5 practices</span></div>
+              <div className="careers-hero-stats__v">
+                {jobsLoaded ? workableJobs.length : 18} <span className="careers-hero-stats__sub">across 5 practices</span>
+              </div>
             </div>
             <div className="careers-hero-stats__item">
               <div className="careers-hero-stats__k">Remote</div>
@@ -109,9 +237,9 @@ export default function CareersPage() {
           </div>
         </div>
         <div className="hero__hud">
-          <span className="pulse">Hiring live · 18 open roles</span>
+          <span className="pulse">Hiring live · {jobsLoaded ? workableJobs.length : 18} open roles</span>
           <span className="hero__hud-grid">
-            <span>HUBS <b>3</b></span><span>OPEN ROLES <b>18</b></span><span>PRACTICES <b>5</b></span>
+            <span>HUBS <b>3</b></span><span>OPEN ROLES <b>{jobsLoaded ? workableJobs.length : 18}</b></span><span>PRACTICES <b>5</b></span>
           </span>
           <span>Careers · v2026.05</span>
         </div>
@@ -122,7 +250,9 @@ export default function CareersPage() {
         <div className="container">
           <div className="section-eyebrow"><span className="idx">01</span><span>Open Roles</span></div>
           <div className="careers-open-intro">
-            <h2 className="careers-open-intro__title">18 open roles across<br/>our global practices.</h2>
+            <h2 className="careers-open-intro__title">
+              {jobsLoaded ? `${workableJobs.length} open roles` : '18 open roles'} across our global <em style={{fontStyle:'normal',background:'linear-gradient(120deg,var(--accent),var(--accent-2))',WebkitBackgroundClip:'text',backgroundClip:'text',color:'transparent'}}>practices.</em>
+            </h2>
             <p className="careers-open-intro__lead">We hire for depth and curiosity. If you don&apos;t see your exact role below, send an open application — we&apos;re always interested in exceptional people.</p>
           </div>
 
@@ -133,33 +263,34 @@ export default function CareersPage() {
             ))}
           </div>
 
-          {/* Job list */}
-          <div className="job-list" id="job-list">
-            {filtered.map(job => {
-              const origIdx = JOBS.findIndex(j => j.title === job.title)
-              const d = origIdx >= 0 ? JOB_REVEAL_DELAY[origIdx] : null
-              const delayCls = d != null ? ` reveal-delay-${d}` : ''
-              return (
-              <a
-                key={job.title}
-                className={`job-card reveal${delayCls}`}
-                href="#apply"
-                data-dept={job.dept}
-                onClick={() => handleApply(job.title)}
-              >
-                <div className="job-card__left">
-                  <div className="job-card__title">{job.title}</div>
-                  <div className="job-card__meta">
-                    <span className="job-card__tag job-card__tag--dept">{DEPT_LABEL[job.dept]||job.dept}</span>
-                    <span className="job-card__tag job-card__tag--loc">{job.loc}</span>
-                    <span className="job-card__tag job-card__tag--type">{job.type}</span>
+          {/* Job list container */}
+          <div className="reveal" style={{ position: 'relative' }}>
+            {!jobsLoaded && (
+              <div className="job-list-loading-placeholder">
+                <div className="loading-pulse-card">
+                  <div className="pulse-title"></div>
+                  <div className="pulse-meta">
+                    <div className="pulse-tag"></div>
+                    <div className="pulse-tag font-cyan"></div>
                   </div>
-                  <div className="job-card__desc">{job.desc}</div>
                 </div>
-                <div className="job-card__right"><span className="job-card__apply">Apply</span></div>
-              </a>
-              )
-            })}
+                <div className="loading-pulse-card">
+                  <div className="pulse-title"></div>
+                  <div className="pulse-meta">
+                    <div className="pulse-tag"></div>
+                    <div className="pulse-tag font-cyan"></div>
+                  </div>
+                </div>
+                <div className="loading-pulse-card">
+                  <div className="pulse-title"></div>
+                  <div className="pulse-meta">
+                    <div className="pulse-tag"></div>
+                    <div className="pulse-tag font-cyan"></div>
+                  </div>
+                </div>
+              </div>
+            )}
+            <div id="whr_embed_hook"></div>
           </div>
 
           <div style={{marginTop:'24px',textAlign:'center'}}>
@@ -175,7 +306,7 @@ export default function CareersPage() {
           <div className="section-eyebrow"><span className="idx">02</span><span>Apply</span></div>
           <div className="apply-form-wrap">
             <div className="apply-intro">
-              <h2>Apply to Stradit</h2>
+              <h2>Apply to <em style={{fontStyle:'normal',background:'linear-gradient(120deg,var(--accent),var(--accent-2))',WebkitBackgroundClip:'text',backgroundClip:'text',color:'transparent'}}>Stradit</em></h2>
               <p>Send your CV and a note about why you&apos;d like to join. All applications are reviewed by a senior member of our team — not an ATS bot.</p>
               <div className="contact-row">
                 <div className="contact-item">
@@ -206,8 +337,12 @@ export default function CareersPage() {
                     <label htmlFor="role">Role Applying For *</label>
                     <select id="role" value={selectedRole} onChange={e=>setSelectedRole(e.target.value)} required>
                       <option value="">Select a role...</option>
-                      {JOBS.map(j=><option key={j.title}>{j.title}</option>)}
-                      <option>Open Application</option>
+                      {jobsLoaded && workableJobs.length > 0 ? (
+                        workableJobs.map(j=><option key={j.title} value={j.title}>{j.title}</option>)
+                      ) : (
+                        JOBS.map(j=><option key={j.title} value={j.title}>{j.title}</option>)
+                      )}
+                      <option value="Open Application">Open Application</option>
                     </select>
                   </div>
                   <div className="form-field">
@@ -248,6 +383,7 @@ export default function CareersPage() {
         </div>
       </section>
 
+      </main>
       <Footer />
     </>
   )
