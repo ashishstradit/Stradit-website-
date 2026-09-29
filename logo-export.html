@@ -1,42 +1,108 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
 <meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>StradIT — Logo Assets</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
-  body { background: #060912; display: flex; align-items: center; justify-content: center; min-height: 100vh; margin: 0; font-family: "Inter Tight", system-ui, sans-serif; gap: 48px; flex-wrap: wrap; }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    background: #060912;
+    font-family: "Inter Tight", system-ui, sans-serif;
+    color: #f5f7fb;
+    padding: 48px 24px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 40px;
+  }
+  h1 { font-size: 20px; font-weight: 600; letter-spacing: -0.02em; opacity: 0.7; }
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 24px;
+    width: 100%;
+    max-width: 900px;
+  }
+  .card {
+    background: #0a1020;
+    border: 1px solid rgba(255,255,255,0.07);
+    border-radius: 16px;
+    padding: 40px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+  }
+  .card.light { background: #f5f7fb; }
+  .label { font-size: 11px; font-family: monospace; letter-spacing: 0.16em; text-transform: uppercase; color: #56638a; }
+  .card.light .label { color: #8593b0; }
   .logo { display: flex; align-items: center; gap: 8px; }
   .brand-strad { color: #ff7a3d; font-weight: 700; font-size: 28px; letter-spacing: 0.04em; }
-  .brand-it { color: #f5f7fb; font-weight: 700; font-size: 28px; letter-spacing: 0.04em; }
-  .icon-only { padding: 32px; background: #0a1020; border-radius: 16px; }
-  .full-logo { padding: 32px 48px; background: #0a1020; border-radius: 16px; }
+  .brand-it { font-weight: 700; font-size: 28px; letter-spacing: 0.04em; margin-left: -1px; }
+  .dark-text { color: #f5f7fb; }
+  .light-text { color: #0a1020; }
+  .colors { display: flex; gap: 16px; flex-wrap: wrap; justify-content: center; margin-top: 8px; }
+  .swatch { display: flex; flex-direction: column; align-items: center; gap: 6px; font-family: monospace; font-size: 11px; }
+  .chip { width: 48px; height: 48px; border-radius: 8px; border: 1px solid rgba(255,255,255,0.1); }
 </style>
 </head>
 <body>
+  <h1>StradIT — Logo Assets</h1>
 
-  <!-- Icon only -->
-  <div class="icon-only">
-    <svg width="48" height="48" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <polygon points="12,3 20,7.5 20,16.5 12,21 4,16.5 4,7.5" fill="#ff7a3d" stroke="#ff7a3d" stroke-width="1.2"/>
-      <circle cx="12" cy="12" r="2.8" fill="#ffffff"/>
-      <line x1="12" y1="9.2" x2="12" y2="3.5" stroke="#ffffff" stroke-width="1.6" stroke-linecap="round"/>
-      <line x1="14.4" y1="13.4" x2="19.5" y2="16.2" stroke="#ffffff" stroke-width="1.6" stroke-linecap="round"/>
-      <line x1="9.6" y1="13.4" x2="4.5" y2="16.2" stroke="#ffffff" stroke-width="1.6" stroke-linecap="round"/>
-    </svg>
-  </div>
-
-  <!-- Full logo -->
-  <div class="full-logo">
-    <div class="logo">
-      <svg width="36" height="36" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <div class="grid">
+    <!-- Icon only -->
+    <div class="card">
+      <div class="label">Icon · Dark BG</div>
+      <svg width="72" height="72" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
         <polygon points="12,3 20,7.5 20,16.5 12,21 4,16.5 4,7.5" fill="#ff7a3d" stroke="#ff7a3d" stroke-width="1.2"/>
         <circle cx="12" cy="12" r="2.8" fill="#ffffff"/>
         <line x1="12" y1="9.2" x2="12" y2="3.5" stroke="#ffffff" stroke-width="1.6" stroke-linecap="round"/>
         <line x1="14.4" y1="13.4" x2="19.5" y2="16.2" stroke="#ffffff" stroke-width="1.6" stroke-linecap="round"/>
         <line x1="9.6" y1="13.4" x2="4.5" y2="16.2" stroke="#ffffff" stroke-width="1.6" stroke-linecap="round"/>
       </svg>
-      <span class="brand-strad">STRAD</span><span class="brand-it">IT</span>
+    </div>
+
+    <!-- Full logo dark -->
+    <div class="card">
+      <div class="label">Wordmark · Dark BG</div>
+      <div class="logo">
+        <svg width="40" height="40" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <polygon points="12,3 20,7.5 20,16.5 12,21 4,16.5 4,7.5" fill="#ff7a3d" stroke="#ff7a3d" stroke-width="1.2"/>
+          <circle cx="12" cy="12" r="2.8" fill="#ffffff"/>
+          <line x1="12" y1="9.2" x2="12" y2="3.5" stroke="#ffffff" stroke-width="1.6" stroke-linecap="round"/>
+          <line x1="14.4" y1="13.4" x2="19.5" y2="16.2" stroke="#ffffff" stroke-width="1.6" stroke-linecap="round"/>
+          <line x1="9.6" y1="13.4" x2="4.5" y2="16.2" stroke="#ffffff" stroke-width="1.6" stroke-linecap="round"/>
+        </svg>
+        <span class="brand-strad">STRAD</span><span class="brand-it dark-text">IT</span>
+      </div>
+    </div>
+
+    <!-- Full logo light -->
+    <div class="card light">
+      <div class="label">Wordmark · Light BG</div>
+      <div class="logo">
+        <svg width="40" height="40" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <polygon points="12,3 20,7.5 20,16.5 12,21 4,16.5 4,7.5" fill="#ff7a3d" stroke="#ff7a3d" stroke-width="1.2"/>
+          <circle cx="12" cy="12" r="2.8" fill="#ffffff"/>
+          <line x1="12" y1="9.2" x2="12" y2="3.5" stroke="#ffffff" stroke-width="1.6" stroke-linecap="round"/>
+          <line x1="14.4" y1="13.4" x2="19.5" y2="16.2" stroke="#ffffff" stroke-width="1.6" stroke-linecap="round"/>
+          <line x1="9.6" y1="13.4" x2="4.5" y2="16.2" stroke="#ffffff" stroke-width="1.6" stroke-linecap="round"/>
+        </svg>
+        <span class="brand-strad">STRAD</span><span class="brand-it light-text">IT</span>
+      </div>
     </div>
   </div>
 
+  <!-- Color palette -->
+  <div class="colors">
+    <div class="swatch"><div class="chip" style="background:#ff7a3d"></div>#ff7a3d</div>
+    <div class="swatch"><div class="chip" style="background:#ffa066"></div>#ffa066</div>
+    <div class="swatch"><div class="chip" style="background:#e85a1c"></div>#e85a1c</div>
+    <div class="swatch"><div class="chip" style="background:#ffffff"></div>#ffffff</div>
+    <div class="swatch"><div class="chip" style="background:#f5f7fb"></div>#f5f7fb</div>
+    <div class="swatch"><div class="chip" style="background:#060912"></div>#060912</div>
+  </div>
 </body>
 </html>

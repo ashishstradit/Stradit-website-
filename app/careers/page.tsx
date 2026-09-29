@@ -7,25 +7,312 @@ import AnimCanvas from '@/components/AnimCanvas'
 /** Reveal stagger classes — matches `Stradit Careers (1).html` job list order */
 const JOB_REVEAL_DELAY: (number | null)[] = [null, 1, 2, null, 1, 2, 3, null, 1, 2, 3, null, 1]
 
-const JOBS = [
-  { title: 'Senior ML Engineer — LLM Workflows', dept: 'Applied AI', loc: 'New York · London', type: 'Full-time · Hybrid', desc: 'Design and ship production LLM pipelines for capital-markets clients. Experience with RAG architectures, prompt engineering, and model evaluation required.' },
-  { title: 'AI Governance & Safety Lead', dept: 'Applied AI', loc: 'London · Remote', type: 'Full-time', desc: 'Own AI risk frameworks, red-teaming, and compliance alignment for regulated client programs. NIST AI RMF and financial services background preferred.' },
-  { title: 'AI Solutions Architect', dept: 'Applied AI', loc: 'New York · US and UK', type: 'Full-time · Hybrid', desc: 'Lead technical discovery and architecture design for enterprise AI programs. Breadth across LLMs, data pipelines, and cloud infrastructure essential.' },
-  { title: 'Senior Data Engineer — Capital Markets', dept: 'Data', loc: 'New York · London', type: 'Full-time', desc: 'Build streaming data pipelines and governed data products for asset management and banking clients. Spark, dbt, Kafka, and financial domain knowledge.' },
-  { title: 'Analytics Engineer', dept: 'Data', loc: 'US and UK · Remote', type: 'Full-time', desc: 'Model and document enterprise data domains, build semantic layers, and deliver analytics that decision-makers actually use. dbt and SQL mastery required.' },
-  { title: 'AI Security Engineer', dept: 'Cyber', loc: 'London · New York', type: 'Full-time', desc: 'Secure AI systems against prompt injection, model exfiltration, and adversarial attacks. Red-team AI deployments and own the security design of LLM-powered workflows.' },
-  { title: 'Compliance & Threat Intelligence Analyst', dept: 'Cyber', loc: 'London', type: 'Full-time', desc: 'Map client postures to NIST, ISO 27001, and SOC2 continuously. Build AI-assisted threat detection and compliance reporting pipelines.' },
-  { title: 'Staff Platform Engineer — Cloud & Infrastructure', dept: 'Cloud', loc: 'New York · London · US and UK', type: 'Full-time · Hybrid', desc: 'Define landing-zone standards and lead cloud migrations for institutional clients. AWS/Azure/GCP expertise + strong Terraform and Kubernetes fundamentals.' },
-  { title: 'FinOps Analyst', dept: 'Cloud', loc: 'US and UK · Remote', type: 'Full-time', desc: 'Drive cloud cost discipline for enterprise programs — tagging, allocation, rightsizing, and FinOps reporting. FinOps Foundation certification a plus.' },
-  { title: 'Senior QA Automation Engineer', dept: 'QA', loc: 'US and UK · London', type: 'Full-time', desc: 'Build automation-first QA frameworks for AI-powered financial applications. Playwright, Cypress, and AI-assisted test generation experience valued.' },
-  { title: 'AI Testing Specialist', dept: 'QA', loc: 'Remote · US and UK', type: 'Full-time', desc: 'Evaluate LLM outputs, design bias and hallucination test suites, and own synthetic data generation for regulated AI programs.' },
-  { title: 'AI Program Director', dept: 'Strategy', loc: 'New York · London', type: 'Full-time', desc: 'Lead cross-functional AI transformation programs for Tier 1 financial institutions. CTO/CIO stakeholder management and delivery governance expertise required.' },
-  { title: 'StartIT AI Training Lead', dept: 'Strategy', loc: 'New York · London · Remote', type: 'Full-time', desc: 'Design and deliver our AI upskilling curriculum for enterprise cohorts. Experience in corporate L&D or technical education at financial institutions preferred.' },
+export interface JobPosition {
+  title: string
+  dept: string
+  loc: string
+  type: string
+  desc: string
+  applyUrl: string
+  postedDate: string
+}
+
+const JOBS: JobPosition[] = [
+  // Applied AI
+  {
+    title: 'AI Gateway Engineer',
+    dept: 'Applied AI',
+    loc: 'Jersey City, NJ · Dallas, TX · Tampa, FL',
+    type: 'Full-time · Hybrid',
+    desc: 'Design and deploy resilient, high-throughput AI gateways, model orchestration pipelines, and intelligent routing layers with strict latency and security SLAs.',
+    applyUrl: 'https://apply.workable.com/j/80B6A81350',
+    postedDate: 'Aug 26, 2026',
+  },
+  {
+    title: 'AI Tech Lead - US',
+    dept: 'Applied AI',
+    loc: 'New York, NY · Jersey City, NJ',
+    type: 'Full-time · Hybrid',
+    desc: 'Drive enterprise AI solution architecture, governance frameworks, and production-grade LLM engineering for Tier 1 institutional clients.',
+    applyUrl: 'https://apply.workable.com/j/571759CE78',
+    postedDate: 'Jun 05, 2026',
+  },
+  {
+    title: 'Python Full Stack AI Engineer',
+    dept: 'Applied AI',
+    loc: 'Pune, Maharashtra',
+    type: 'Full-time',
+    desc: 'Build intelligent applications and scalable cloud backends, coupling modern frontend frameworks with LLM agents, vector stores, and real-time streaming.',
+    applyUrl: 'https://apply.workable.com/j/83DD15F3A2',
+    postedDate: 'Jul 09, 2026',
+  },
+
+  // Data Analytics
+  {
+    title: 'Quantitative Analyst',
+    dept: 'Data Analytics',
+    loc: 'Jersey City, NJ',
+    type: 'Full-time · Hybrid',
+    desc: 'Develop rigorous statistical, algorithmic, and financial models for capital markets, asset management, and complex quantitative datasets.',
+    applyUrl: 'https://apply.workable.com/j/602BD7C7EF',
+    postedDate: 'Jul 21, 2026',
+  },
+  {
+    title: 'Quantitative Analyst (Associate / Non-VP)',
+    dept: 'Data Analytics',
+    loc: 'Jersey City, NJ',
+    type: 'Full-time · Hybrid',
+    desc: 'Collaborate with quantitative trading and research teams to calibrate pricing models, stress-test simulations, and manage market risk analytics.',
+    applyUrl: 'https://apply.workable.com/j/B78A3F363C',
+    postedDate: 'Sep 11, 2026',
+  },
+  {
+    title: 'Quantitative Analyst - US',
+    dept: 'Data Analytics',
+    loc: 'Jersey City, NJ',
+    type: 'Full-time · Hybrid',
+    desc: 'Lead data analysis, statistical research, and quantitative pipeline development for institutional clients across our US practice.',
+    applyUrl: 'https://apply.workable.com/j/7E6B0C1709',
+    postedDate: 'Jun 15, 2026',
+  },
+  {
+    title: 'Automation Test Engineer - Data Analytics and Reporting',
+    dept: 'Data Analytics',
+    loc: 'Hyderabad · Chennai, India',
+    type: 'Full-time',
+    desc: 'Deliver automated verification, schema testing, and data validation for enterprise BI reporting and modern cloud data warehouses.',
+    applyUrl: 'https://apply.workable.com/j/C8BCED68FF',
+    postedDate: 'Sep 03, 2026',
+  },
+
+  // Cyber Security
+  {
+    title: 'Network Penetration Testing Specialist',
+    dept: 'Cyber Security',
+    loc: 'Dallas, TX · Tampa, FL · Jersey City, NJ',
+    type: 'Full-time · Hybrid',
+    desc: 'Conduct red-teaming, external/internal network penetration testing, adversarial vulnerability research, and comprehensive threat assessments.',
+    applyUrl: 'https://apply.workable.com/j/013576050F',
+    postedDate: 'Sep 28, 2026',
+  },
+  {
+    title: 'Cybersecurity Risk Analyst',
+    dept: 'Cyber Security',
+    loc: 'Dallas, TX · Tampa, FL',
+    type: 'Full-time · Hybrid',
+    desc: 'Assess and monitor institutional security risk, compliance postures against NIST/ISO/SOC2, and third-party risk across critical enterprise ecosystems.',
+    applyUrl: 'https://apply.workable.com/j/6A4E937CFF',
+    postedDate: 'Aug 18, 2026',
+  },
+  {
+    title: 'IT Risk & Control Specialist',
+    dept: 'Cyber Security',
+    loc: 'Hyderabad, Telangana',
+    type: 'Full-time',
+    desc: 'Design, audit, and evaluate IT general controls, risk governance processes, and regulatory readiness for mission-critical client infrastructure.',
+    applyUrl: 'https://apply.workable.com/j/37F1D50283',
+    postedDate: 'Sep 15, 2026',
+  },
+
+  // Cloud
+  {
+    title: 'Grafana & Observability Engineer',
+    dept: 'Cloud',
+    loc: 'Jersey City, NJ · Dallas, TX · Tampa, FL',
+    type: 'Full-time · Hybrid',
+    desc: 'Architect centralized observability platforms using Grafana, Prometheus, OpenTelemetry, and distributed tracing across hybrid cloud environments.',
+    applyUrl: 'https://apply.workable.com/j/217670E022',
+    postedDate: 'Aug 20, 2026',
+  },
+  {
+    title: 'Lead Middleware Infrastructure Engineer',
+    dept: 'Cloud',
+    loc: 'Dallas, TX',
+    type: 'Full-time',
+    desc: 'Own enterprise message brokers, WebSphere/MQ systems, application servers, and automated infrastructure provisioning for core banking systems.',
+    applyUrl: 'https://apply.workable.com/j/D20BBB1851',
+    postedDate: 'Jul 06, 2026',
+  },
+  {
+    title: 'Mainframe Capacity Planning Engineer - US',
+    dept: 'Cloud',
+    loc: 'Jersey City, NJ · Tampa, FL · Dallas, TX · Boston, MA',
+    type: 'Full-time · Hybrid',
+    desc: 'Lead workload forecasting, performance optimization, and capacity analytics across large-scale IBM z/OS mainframe environments.',
+    applyUrl: 'https://apply.workable.com/j/906D9D6EED',
+    postedDate: 'Aug 25, 2026',
+  },
+  {
+    title: 'OCP Engineer',
+    dept: 'Cloud',
+    loc: 'Jersey City, NJ',
+    type: 'Full-time · Hybrid',
+    desc: 'Deploy, automate, and harden Red Hat OpenShift Container Platform (OCP) clusters, container runtimes, and CI/CD gitops pipelines.',
+    applyUrl: 'https://apply.workable.com/j/2EAEA79EB2',
+    postedDate: 'Aug 06, 2026',
+  },
+  {
+    title: 'Java Full Stack Developer',
+    dept: 'Cloud',
+    loc: 'Dallas, TX · Jersey City, NJ · Tampa, FL',
+    type: 'Full-time · Hybrid',
+    desc: 'Build resilient microservices with Spring Boot, Java, and modern frontend frameworks for mission-critical financial client platforms.',
+    applyUrl: 'https://apply.workable.com/j/00321E459C',
+    postedDate: 'Jun 23, 2026',
+  },
+  {
+    title: 'Python Developer',
+    dept: 'Cloud',
+    loc: 'Jersey City, NJ · Dallas, TX · Tampa, FL · Boston, MA',
+    type: 'Full-time · Hybrid',
+    desc: 'Engineered high-throughput backend services, data pipelines, asynchronous architectures, and REST/gRPC APIs in modern Python.',
+    applyUrl: 'https://apply.workable.com/j/D3E3509AF9',
+    postedDate: 'Aug 05, 2026',
+  },
+  {
+    title: 'SAP Basis Admin',
+    dept: 'Cloud',
+    loc: 'New York, NY · Jersey City, NJ',
+    type: 'Full-time · Hybrid',
+    desc: 'Manage SAP system installations, upgrades, transport management, database performance tuning, and cloud migrations.',
+    applyUrl: 'https://apply.workable.com/j/56CE90117D',
+    postedDate: 'Aug 31, 2026',
+  },
+  {
+    title: 'Blockchain - USA',
+    dept: 'Cloud',
+    loc: 'New York, NY',
+    type: 'Full-time · Hybrid',
+    desc: 'Design and deploy smart contracts, tokenomics structures, and secure distributed ledger integrations for financial market institutions.',
+    applyUrl: 'https://apply.workable.com/j/3C4F64E8D8',
+    postedDate: 'Jun 23, 2026',
+  },
+  {
+    title: 'Blockchain - India',
+    dept: 'Cloud',
+    loc: 'Pune, Maharashtra',
+    type: 'Full-time',
+    desc: 'Develop decentralized protocol logic, consensus interfaces, and Web3 infrastructure solutions with deep cryptography focus.',
+    applyUrl: 'https://apply.workable.com/j/45C8BD2106',
+    postedDate: 'Jun 24, 2026',
+  },
+
+  // QA Engineering
+  {
+    title: 'QA Automation Engineers / SDET / Test Architect',
+    dept: 'QA Engineering',
+    loc: 'Chennai, Tamil Nadu',
+    type: 'Full-time',
+    desc: 'Architect test automation frameworks from scratch, drive end-to-end API/UI automation, and establish robust test architectures in CI/CD.',
+    applyUrl: 'https://apply.workable.com/j/1F37F60EF2',
+    postedDate: 'Aug 14, 2026',
+  },
+  {
+    title: 'SDET (3 to 6 Years of experience)',
+    dept: 'QA Engineering',
+    loc: 'Jersey City, NJ · Dallas, TX',
+    type: 'Full-time · Hybrid',
+    desc: 'Write automated regression suites, integration tests, and performance validation scripts for enterprise financial software.',
+    applyUrl: 'https://apply.workable.com/j/E12A1F197A',
+    postedDate: 'Aug 20, 2026',
+  },
+  {
+    title: 'SDET - US (W2 Employment, Visa Independent)',
+    dept: 'QA Engineering',
+    loc: 'Tampa, FL · US Nationwide',
+    type: 'Full-time · W2',
+    desc: 'Lead automated testing pipelines for regulated enterprise systems. Open to GC, USC, and Visa-independent candidates.',
+    applyUrl: 'https://apply.workable.com/j/2845DFAA0F',
+    postedDate: 'Jul 17, 2026',
+  },
+
+  // Strategy, Operations & Growth
+  {
+    title: 'Associate Director',
+    dept: 'Strategy',
+    loc: 'Jersey City, NJ · Tampa, FL',
+    type: 'Full-time · Hybrid',
+    desc: 'Lead strategic enterprise client engagements, manage cross-functional delivery practices, and oversee digital transformation outcomes.',
+    applyUrl: 'https://apply.workable.com/j/0A0F292BA9',
+    postedDate: 'Sep 03, 2026',
+  },
+  {
+    title: 'Scrum Master',
+    dept: 'Strategy',
+    loc: 'Dallas, TX · Tampa, FL',
+    type: 'Full-time · Hybrid',
+    desc: 'Facilitate agile delivery teams, sprint ceremonies, backlog grooming, and remove blockers to maximize engineering velocity.',
+    applyUrl: 'https://apply.workable.com/j/A0681011E1',
+    postedDate: 'Aug 12, 2026',
+  },
+  {
+    title: 'IT Strategic Sourcing (Sr Associate)',
+    dept: 'Strategy',
+    loc: 'Jersey City, NJ · Tampa, FL',
+    type: 'Full-time · Hybrid',
+    desc: 'Drive procurement operations, vendor evaluations, MSA/SOW contract negotiations, and strategic technology sourcing strategies.',
+    applyUrl: 'https://apply.workable.com/j/A6AFEA50CE',
+    postedDate: 'Sep 03, 2026',
+  },
+  {
+    title: 'IT Sourcer',
+    dept: 'Strategy',
+    loc: 'Tampa, FL · Dallas, TX',
+    type: 'Full-time · Hybrid',
+    desc: 'Identify and engage high-caliber engineering talent across AI, Cloud, Cybersecurity, and Data through strategic sourcing pipelines.',
+    applyUrl: 'https://apply.workable.com/j/6D23422A24',
+    postedDate: 'Jul 21, 2026',
+  },
+  {
+    title: 'Employee Onboarding Specialist',
+    dept: 'Strategy',
+    loc: 'Tampa, FL · Jersey City, NJ · Dallas, TX',
+    type: 'Full-time · Hybrid',
+    desc: 'Deliver seamless, high-touch onboarding journeys for new team members across US hubs, managing compliance and provisioning.',
+    applyUrl: 'https://apply.workable.com/j/7AA6C39F33',
+    postedDate: 'Aug 13, 2026',
+  },
+  {
+    title: 'Background Check Specialist',
+    dept: 'Strategy',
+    loc: 'Tampa, FL',
+    type: 'Full-time · Hybrid',
+    desc: 'Coordinate and verify comprehensive background screening and security clearances for personnel placed with regulated financial institutions.',
+    applyUrl: 'https://apply.workable.com/j/C764C4CFFE',
+    postedDate: 'Aug 05, 2026',
+  },
+  {
+    title: 'External Workforce Procurement Administrator',
+    dept: 'Strategy',
+    loc: 'Chennai, Tamil Nadu',
+    type: 'Full-time',
+    desc: 'Manage vendor management systems (VMS), contractor timesheets, onboarding compliance, and procurement admin workflows.',
+    applyUrl: 'https://apply.workable.com/j/75A7815E1A',
+    postedDate: 'Sep 16, 2026',
+  },
+  {
+    title: 'BDR / SDR / Account Managers',
+    dept: 'Strategy',
+    loc: 'New York, NY',
+    type: 'Full-time · Hybrid',
+    desc: 'Drive revenue expansion, qualify enterprise leads, and build relationships with technical decision-makers.',
+    applyUrl: 'https://apply.workable.com/j/07A55332B5',
+    postedDate: 'Jun 13, 2026',
+  },
+  {
+    title: 'Jr. BDR/SDR',
+    dept: 'Strategy',
+    loc: 'New York, NY',
+    type: 'Full-time · Hybrid',
+    desc: 'Accelerate outbound prospecting, research target institutional accounts, and generate qualified meetings for sales leadership.',
+    applyUrl: 'https://apply.workable.com/j/7832D634DB',
+    postedDate: 'Jul 13, 2026',
+  },
 ]
 
 const FILTERS = ['All roles', 'Applied AI', 'Data Analytics', 'Cyber Security', 'Cloud', 'QA Engineering', 'Strategy']
-const FILTER_TO_DEPT: Record<string, string> = { 'Applied AI': 'Applied AI', 'Data Analytics': 'Data', 'Cyber Security': 'Cyber', 'Cloud': 'Cloud', 'QA Engineering': 'QA', 'Strategy': 'Strategy' }
-const DEPT_LABEL: Record<string, string> = { 'Applied AI': 'Applied AI', 'Data': 'Data Analytics', 'Cyber': 'Cyber Security', 'Cloud': 'Cloud', 'QA': 'QA Engineering', 'Strategy': 'Strategy' }
+const FILTER_TO_DEPT: Record<string, string> = { 'Applied AI': 'Applied AI', 'Data Analytics': 'Data Analytics', 'Cyber Security': 'Cyber Security', 'Cloud': 'Cloud', 'QA Engineering': 'QA Engineering', 'Strategy': 'Strategy' }
+const DEPT_LABEL: Record<string, string> = { 'Applied AI': 'Applied AI', 'Data Analytics': 'Data Analytics', 'Cyber Security': 'Cyber Security', 'Cloud': 'Cloud', 'QA Engineering': 'QA Engineering', 'Strategy': 'Strategy' }
 
 export default function CareersPage() {
   const [activeFilter, setActiveFilter] = useState('All roles')
@@ -35,6 +322,11 @@ export default function CareersPage() {
   const [jobsLoaded, setJobsLoaded] = useState(false)
   const [workableJobs, setWorkableJobs] = useState<{ title: string; dept: string }[]>([])
   const applyRef = useRef<HTMLElement>(null)
+
+  const filteredJobs = JOBS.filter(job => {
+    if (activeFilter === 'All roles') return true
+    return job.dept.toLowerCase() === activeFilter.toLowerCase()
+  })
 
   // Load Workable Embed script
   useEffect(() => {
@@ -227,7 +519,7 @@ export default function CareersPage() {
             <div className="careers-hero-stats__item careers-hero-stats__item--mid">
               <div className="careers-hero-stats__k">Open roles</div>
               <div className="careers-hero-stats__v">
-                {jobsLoaded ? workableJobs.length : 18} <span className="careers-hero-stats__sub">across 5 practices</span>
+                {jobsLoaded ? workableJobs.length : 77} <span className="careers-hero-stats__sub">across 5 practices</span>
               </div>
             </div>
             <div className="careers-hero-stats__item">
@@ -237,9 +529,9 @@ export default function CareersPage() {
           </div>
         </div>
         <div className="hero__hud">
-          <span className="pulse">Hiring live · {jobsLoaded ? workableJobs.length : 18} open roles</span>
+          <span className="pulse">Hiring live · {jobsLoaded ? workableJobs.length : 77} open roles</span>
           <span className="hero__hud-grid">
-            <span>HUBS <b>3</b></span><span>OPEN ROLES <b>{jobsLoaded ? workableJobs.length : 18}</b></span><span>PRACTICES <b>5</b></span>
+            <span>HUBS <b>5</b></span><span>OPEN ROLES <b>{jobsLoaded ? workableJobs.length : 77}</b></span><span>PRACTICES <b>5</b></span>
           </span>
           <span>Careers · v2026.05</span>
         </div>
@@ -251,7 +543,7 @@ export default function CareersPage() {
           <div className="section-eyebrow"><span className="idx">01</span><span>Open Roles</span></div>
           <div className="careers-open-intro">
             <h2 className="careers-open-intro__title">
-              {jobsLoaded ? `${workableJobs.length} open roles` : '18 open roles'} across our global <em style={{fontStyle:'normal',background:'linear-gradient(120deg,var(--accent),var(--accent-2))',WebkitBackgroundClip:'text',backgroundClip:'text',color:'transparent'}}>practices.</em>
+              {jobsLoaded ? `${workableJobs.length} open roles` : '77 open roles'} across our global <em style={{fontStyle:'normal',background:'linear-gradient(120deg,var(--accent),var(--accent-2))',WebkitBackgroundClip:'text',backgroundClip:'text',color:'transparent'}}>practices.</em>
             </h2>
             <p className="careers-open-intro__lead">We hire for depth and curiosity. If you don&apos;t see your exact role below, send an open application — we&apos;re always interested in exceptional people.</p>
           </div>
@@ -265,32 +557,57 @@ export default function CareersPage() {
 
           {/* Job list container */}
           <div className="reveal" style={{ position: 'relative' }}>
-            {!jobsLoaded && (
-              <div className="job-list-loading-placeholder">
-                <div className="loading-pulse-card">
-                  <div className="pulse-title"></div>
-                  <div className="pulse-meta">
-                    <div className="pulse-tag"></div>
-                    <div className="pulse-tag font-cyan"></div>
-                  </div>
+            <div className="jobs-list" style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
+              {filteredJobs.length === 0 ? (
+                <div style={{ padding: '36px', textAlign: 'center', background: 'var(--ink-1)', border: '1px solid var(--line)', borderRadius: '12px' }}>
+                  <p style={{ color: 'var(--text-1)', fontSize: '16px', marginBottom: '8px' }}>No direct openings found for this category right now.</p>
+                  <p style={{ color: 'var(--text-2)', fontSize: '13px' }}>Feel free to submit an open application below.</p>
                 </div>
-                <div className="loading-pulse-card">
-                  <div className="pulse-title"></div>
-                  <div className="pulse-meta">
-                    <div className="pulse-tag"></div>
-                    <div className="pulse-tag font-cyan"></div>
+              ) : (
+                filteredJobs.map((job) => (
+                  <div key={job.title} className="job-card">
+                    <div className="job-card__left">
+                      <div className="job-card__title">{job.title}</div>
+                      <div className="job-card__meta">
+                        <span className="job-card__tag job-card__tag--dept">{job.dept}</span>
+                        <span className="job-card__tag job-card__tag--loc">📍 {job.loc}</span>
+                        <span className="job-card__tag">{job.type}</span>
+                        {job.postedDate && (
+                          <span className="job-card__tag" style={{ opacity: 0.8 }}>Posted: {job.postedDate}</span>
+                        )}
+                      </div>
+                      <div className="job-card__desc">{job.desc}</div>
+                    </div>
+                    <div className="job-card__right" style={{ display: 'flex', gap: '10px', alignItems: 'center', flexWrap: 'wrap' }}>
+                      {job.applyUrl && (
+                        <a
+                          href={job.applyUrl}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="job-card__apply"
+                          title="Apply on Workable"
+                        >
+                          Apply Now
+                        </a>
+                      )}
+                      <button
+                        type="button"
+                        className="btn btn--ghost"
+                        style={{ padding: '8px 14px', fontSize: '11px', textTransform: 'uppercase', letterSpacing: '0.1em' }}
+                        onClick={() => {
+                          setSelectedRole(job.title)
+                          applyRef.current?.scrollIntoView({ behavior: 'smooth' })
+                        }}
+                      >
+                        Quick Apply
+                      </button>
+                    </div>
                   </div>
-                </div>
-                <div className="loading-pulse-card">
-                  <div className="pulse-title"></div>
-                  <div className="pulse-meta">
-                    <div className="pulse-tag"></div>
-                    <div className="pulse-tag font-cyan"></div>
-                  </div>
-                </div>
-              </div>
-            )}
-            <div id="whr_embed_hook"></div>
+                ))
+              )}
+            </div>
+
+            <div id="whr_embed_hook" style={{ display: 'none' }}></div>
           </div>
 
           <div style={{marginTop:'24px',textAlign:'center'}}>
@@ -337,19 +654,15 @@ export default function CareersPage() {
                     <label htmlFor="role">Role Applying For *</label>
                     <select id="role" value={selectedRole} onChange={e=>setSelectedRole(e.target.value)} required>
                       <option value="">Select a role...</option>
-                      {jobsLoaded && workableJobs.length > 0 ? (
-                        workableJobs.map(j=><option key={j.title} value={j.title}>{j.title}</option>)
-                      ) : (
-                        JOBS.map(j=><option key={j.title} value={j.title}>{j.title}</option>)
-                      )}
+                      {JOBS.map(j=><option key={j.title} value={j.title}>{j.title}</option>)}
                       <option value="Open Application">Open Application</option>
                     </select>
                   </div>
                   <div className="form-field">
                     <label htmlFor="location">Preferred Location</label>
                     <select id="location">
-                      {['New York', 'London', 'US and UK', 'Remote', 'Flexible'].map(l => (
-                        <option key={l}>{l}</option>
+                      {['Jersey City, NJ', 'Dallas, TX', 'Tampa, FL', 'New York, NY', 'Boston, MA', 'Hyderabad, India', 'Chennai, India', 'Pune, India', 'Remote / Flexible'].map(l => (
+                        <option key={l} value={l}>{l}</option>
                       ))}
                     </select>
                   </div>
